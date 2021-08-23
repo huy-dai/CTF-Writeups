@@ -1,0 +1,1 @@
+corCTF{my_text_is_golden_1244}

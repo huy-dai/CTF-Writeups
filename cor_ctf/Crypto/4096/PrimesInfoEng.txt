@@ -1,0 +1,12 @@
+© Alexander Glazkov, 2009
+
+File primes.32b presents all 203280220
+prime 32-bit numbers from 3 to 4294967291.
+
+Each number occupies 4 bytes in this binary array.
+
+The array can be used for manual selection of prime number
+(e.g. as a base for effective cryptography) or
+for software generation of prime 64-bit numbers as well.
+
+www.umopit.ru
