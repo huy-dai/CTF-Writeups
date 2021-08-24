@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html style="" lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><meta charset="utf-8"><title>Challenges | corCTF 2021</title><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="shortcut icon" href="https://cor.team/assets/img/favicon.ico"><meta name="title" content="corCTF 2021"><meta name="description" content="The first CTF organized by the Crusaders of Rust (aka Starrust Crusaders), an American and European collegiate team."><meta property="og:type" content="website"><meta property="og:title" content="corCTF 2021"><meta property="og:image" content="https://ctf.cor.team/assets/img/ctflogo.png"><meta property="og:description" content="The first CTF organized by the Crusaders of Rust (aka Starrust Crusaders), an American and European collegiate team."><meta property="og:url" content="https://2021.cor.team"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="corCTF 2021"><meta name="twitter:description" content="The first CTF organized by the Crusaders of Rust (aka Starrust Crusaders), an American and European collegiate team."><meta name="twitter:image" content="https://ctf.cor.team/assets/img/ctflogo.png"><meta name="twitter:url" content="https://2021.cor.team"><link rel="canonical" href="https://2021.cor.team/"><meta name="theme-color" content="#111111"><meta name="rctf-config" content="{&quot;meta&quot;:{&quot;description&quot;:&quot;The first CTF organized by the Crusaders of Rust (aka Starrust Crusaders), an American and European collegiate team.&quot;,&quot;imageUrl&quot;:&quot;https://ctf.cor.team/assets/img/ctflogo.png&quot;},&quot;homeContent&quot;:&quot;&lt;div style=\&quot;display: flex; justify-content: center\&quot;&gt;\n  &lt;img src=\&quot;https://ctf.cor.team/assets/img/ctflogo.png\&quot; alt=\&quot;true\&quot;&gt;\n&lt;/div&gt;\n\n&lt;h1&gt;corCTF&lt;/h1&gt;\n\ncorCTF is a jeopardy style CTF hosted by the Crusaders of Rust (a.k.a. Starrust Crusaders), an American and European collegiate CTF team. Competition categories consist of pwn, rev, crypto, web, and misc, with over 5k USD in prize value for the top 5 teams. Make sure to register [here](/register) for the competition, scroll down for rules, FAQ, and prize information, and join our [Discord server](https://discord.gg/EQbAPwBK27) for more information and updates!\n\n&lt;action-button href=\&quot;/register\&quot; style=\&quot;box-shadow: rgb(13 209 87 / 60%) 0px 0px 1rem 0px;\&quot;&gt;\n  &lt;span&gt;Register Now&lt;/span&gt;\n  &lt;svg viewBox=\&quot;4 4 16 16\&quot;&gt;&lt;path fill=\&quot;#ffffff\&quot; d=\&quot;M16.01 11H4v2h12.01v3L20 12l-3.99-4z\&quot;&gt;&lt;/path&gt;&lt;/svg&gt;\n&lt;/action-button&gt;\n\n&lt;timer&gt;&lt;/timer&gt;\n\n### Sponsors\nThank you to our wonderful sponsors for making this event possible!\n\n&lt;sponsors&gt;&lt;/sponsors&gt;\n\n### Rules\n* Do not share or post any flags or solutions publicly.\n* No hint begging or hint posting.\n* Do not discuss challenges in public or with members from other teams.\n* Each player can only be on one team.\n* No attacking competition/CTF infrastructure (DoS / DDoS), this includes the use of automated vulnscanners and tools such as gobuster, SQLmap, hydra, etc.\n* Report all rule violations and infrastructure issues/vulnerabilities to the admins ASAP.\n* Respect all other players and admins.\n* Any violation of these rules will result in your team being disqualified.\n* The admins reserve the right to change the rules at any time, and all decisions made by the admins are final.\n* Let's all have fun and play together!\n\n### FAQ\n* Our CTFTime page: &lt;a href=\&quot;https://ctftime.org/event/1364\&quot;&gt;https://ctftime.org/event/1364&lt;/a&gt;\n* The CTF will run from Sat, 21 Aug. 2021, 00:00 UTC — Mon, 23 Aug. 2021, 00:00 UTC\n* The flag format is `corctf{[\\x20-\\x7e]*}` unless specified otherwise\n* We will not post any new challenges after 24 hours, except for a survey.\n* Team size is unlimited\n* We may ask for writeups from winning teams\n* Flag hoarding is encouraged\n\n### Prizes\n1st place:\n- 1000 USD\n- Binary Ninja Redemption Codes (x3)\n- Hack The Box 3 Months Prolabs (x5)\n\n2nd place:\n- 500 USD\n- Binary Ninja Redemption Codes (x2)\n- Hack The Box 1 Month Prolabs (x5)\n\n3rd place:\n- 400 USD\n- Hack The Box 6 Month VIP (x5)\n\n4th place:\n- 250 USD\n\n5th place:\n- 150 USD\n\nThe best writeup using Binary Ninja gets a Binary Ninja License Redemption Code too.\n\nPlease note that the prizes might change as the CTF date comes closer. More prizes TBD.\n&quot;,&quot;sponsors&quot;:[{&quot;name&quot;:&quot;Binary Ninja&quot;,&quot;icon&quot;:&quot;https://ctf.cor.team/assets/img/binja.svg&quot;,&quot;link&quot;:&quot;https://binary.ninja/&quot;,&quot;description&quot;:&quot;Prizes sponsored by &lt;a href=\&quot;https://binary.ninja/\&quot;&gt;Binary Ninja&lt;/a&gt;\n&quot;},{&quot;name&quot;:&quot;Check Point Software&quot;,&quot;icon&quot;:&quot;https://ctf.cor.team/assets/img/checkpoint.svg&quot;,&quot;link&quot;:&quot;https://research.checkpoint.com/&quot;,&quot;description&quot;:&quot;Make sure to check out Check Point's &lt;a href=\&quot;https://research.checkpoint.com/\&quot;&gt;latest research&lt;/a&gt; by their official cp&amp;lt;r&amp;gt; research team!\n&quot;},{&quot;name&quot;:&quot;Hack The Box&quot;,&quot;icon&quot;:&quot;https://ctf.cor.team/assets/img/htb.svg&quot;,&quot;link&quot;:&quot;https://www.hackthebox.eu/&quot;,&quot;description&quot;:&quot;Prizes sponsored by &lt;a href=\&quot;https://www.hackthebox.eu/\&quot;&gt;Hack The Box&lt;/a&gt;\n&quot;},{&quot;name&quot;:&quot;Trail of Bits&quot;,&quot;icon&quot;:&quot;https://ctf.cor.team/assets/img/tob.svg&quot;,&quot;link&quot;:&quot;https://www.trailofbits.com/&quot;,&quot;description&quot;:&quot;Prizes sponsored by &lt;a href=\&quot;https://www.trailofbits.com/\&quot;&gt;Trail of Bits&lt;/a&gt;\n&quot;},{&quot;name&quot;:&quot;Google Cloud&quot;,&quot;icon&quot;:&quot;https://ctf.cor.team/assets/img/gcloud.svg&quot;,&quot;link&quot;:&quot;https://g.co/cloud&quot;,&quot;description&quot;:&quot;Infra sponsored by &lt;a href=\&quot;https://g.co/cloud\&quot;&gt;g.co/cloud&lt;/a&gt;\n&quot;}],&quot;ctfName&quot;:&quot;corCTF 2021&quot;,&quot;divisions&quot;:{&quot;open&quot;:&quot;Open&quot;},&quot;origin&quot;:&quot;https://2021.cor.team&quot;,&quot;startTime&quot;:1629504000000,&quot;endTime&quot;:1629676800000,&quot;emailEnabled&quot;:true,&quot;userMembers&quot;:true,&quot;faviconUrl&quot;:&quot;https://cor.team/assets/img/favicon.ico&quot;}"><link href="Challenges%20|%20corCTF%202021_files/bundle.css" rel="stylesheet"><script charset="utf-8" src="Challenges%20|%20corCTF%202021_files/vendorsroute-challsroute-loginroute-profileroute-recoverroute.js"></script><script charset="utf-8" src="Challenges%20|%20corCTF%202021_files/route-challs.js"></script><style data-jss="">
+@keyframes c011 {
+  from {
+    opacity: 0;
+  }
+  to {
+    opactiy: 1;
+  }
+}
+@keyframes c012 {
+  from {
+    transform: scale(0.8);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+.c013 {
+  background: #222;
+  color: #fff;
+  max-width: initial;
+}
+.c014 {
+  display: flex;
+  animation: c011 150ms ease-out;
+}
+.c014 .modal-content {
+  animation: c012 150ms ease-out;
+}
+.c014.leaving {
+  opacity: 0;
+  transition: opacity 150ms ease-in;
+}
+.c014.leaving .modal-content {
+  transform: scale(0.8);
+  transition: transform 150ms ease-in;
+}
+</style><style data-jss="">
+.c015 {
+  font-family: inherit;
+}
+</style><style data-jss="">
+.c016 {
+  background: #0000 !important;
+  color: #fff !important;
+  padding: .5rem .7rem !important;
+}
+.c016:focus {
+  box-shadow: none;
+  border-bottom-color: var(--cirrus-accent-hover);
+}
+.c016:hover {
+  border-bottom-color: var(--cirrus-accent-border);
+}
+.c017 {
+  border-bottom-color: #333 !important;
+  justify-content: center;
+}
+.c017 li.selected a {
+  color: var(--cirrus-accent-hover) !important;
+}
+.c017 a {
+  font-size: 1rem;
+}
+.c018 li:hover a {
+  border-bottom-color: var(--cirrus-accent-border);
+}
+.c019 {
+  display: flex;
+  justify-content: flex-start;
+  flex-grow: 1;
+  align-self: center;
+}
+.c0110 {
+  display: flex;
+  justify-content: flex-end;
+}
+.c0111 {
+  justify-content: space-between;
+  max-width: 75%;
+  padding-bottom: 0;
+  padding-top: 0;
+}
+@media (max-width: 768px) {
+  .c019 {
+    width: 100%;
+    justify-content: center;
+  }
+  .c0110 {
+    width: 100%;
+    justify-content: center;
+  }
+}
+</style><style data-jss="">
+.c0112 {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+  font-size: 0.85rem;
+  opacity: 0.7;
+  transition: opacity 300ms ease;
+}
+.c0112 a {
+  display: inline;
+  padding: 0;
+}
+.c0112:hover {
+  opacity: 1;
+}
+</style><style data-jss="">
+body {
+  overflow-x: hidden;
+}
+.grecaptcha-badge {
+  visibility: hidden;
+}
+body > div[style*="position: absolute"] {
+  top: 10px !important;
+}
+.c0125 {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  background: #111;
+  color: #fff;
+}
+.c0125 *:not(code):not(pre) {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Noto Sans", "Oxygen", "Ubuntu", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important;
+}
+.c0125 pre.code {
+  padding: 10px;
+  background: var(--cirrus-code-bg);
+  border-radius: 5px;
+  margin: 10px 0;
+  color: #ccc;
+  border: 1px solid #ffffff1a;
+}
+.c0125 code {
+  padding: .2em .4em;
+  background: var(--cirrus-code-bg);
+  border-radius: 3px;
+  color: #ccc;
+  border: 1px solid #ffffff1a;
+}
+select {
+  background: url("data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%204%205'%3E%3Cpath%20fill='%23667189'%20d='M2%200L0%202h4zm0%205L0%203h4z'/%3E%3C/svg%3E") right .85rem center/.5rem .6rem no-repeat no-repeat #111 !important;
+}
+:root {
+  --cirrus-link: #72b4e0;
+  --cirrus-link-dark: #277edb;
+  --cirrus-select-bg: rgba(0, 161, 255, 0.4);
+  --cirrus-code-bg: #333;
+  --cirrus-primary: #0dd157;
+  --cirrus-accent-hover: #1fff1f;
+  --cirrus-accent-border: #00b147;
+}
+.c0126 {
+  flex: 1 0 auto;
+}
+.c0127 {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('https://cor.team/assets/img/logo.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: opacity(0.05);
+  pointer-events: none;
+  background-size: 75vh;
+}
+</style><style data-jss="">
+.c0165 {
+  margin-bottom: 0.625em;
+}
+.c0166 {
+  margin-bottom: 1em;
+  padding-bottom: 0.625em;
+  background: #222;
+}
+.c0167 {
+  justify-content: center;
+}
+.c0167 .title, .c0167 .frame__subtitle {
+  color: #fff;
+}
+</style><style data-jss="">
+.c0170 {
+  padding-bottom: 1.5em;
+  padding-top: 2.125em;
+  background: #222;
+}
+.c0170 .frame__subtitle {
+  color: #fff;
+}
+.c0170 button, .c0170 select, .c0170 option {
+  background: #111;
+  color: #fff;
+}
+.c0171 {
+  padding-top: 1.5em;
+}
+.c0172 {
+  background-color: rgba(216,216,216,.07);
+}
+.c0172:hover {
+  background-color: rgba(216,216,216,.20) !important;
+}
+.c0173 {
+  table-layout: fixed;
+}
+.c0173 tbody td {
+  overflow: hidden;
+  white-space: nowrap;
+}
+</style><style data-jss="">
+.c01104 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(384px, 1fr));
+  width: 100%;
+  max-width: 1500px;
+  margin: auto;
+}
+.c01104 .card {
+  background: #222;
+  margin-bottom: 20px;
+}
+.c01104 input, .c01104 select, .c01104 option {
+  background: #111;
+  color: #fff !important;
+}
+.c01105 {
+  margin: 0 auto;
+  width: calc(100% - 20px);
+  margin-left: 10px;
+}
+.c01106 {
+  width: calc(100% - 20px);
+  margin-left: 10px;
+}
+.c01107 {
+  background: #222;
+}
+</style><style data-jss="">
+.c01108 a {
+  display: inline;
+  padding: 0;
+}
+.c01108 h1, .c01108 h2, .c01108 h3 {
+  margin: 32px 0 16px 0;
+}
+</style><style data-jss="">
+.c0193 {
+  font-size: small;
+  overflow-wrap: break-word;
+  user-select: all;
+  font-family: monospace !important;
+  cursor: pointer;
+  background: #111;
+}
+</style><style data-jss="">
+.c0113 {
+  position: fixed;
+  top: 1em;
+  right: 1em;
+  z-index: 9999;
+  width: 320px;
+}
+</style><style data-jss="">
+.c0146 {
+  padding: 10px;
+  margin: 20px 0;
+  background: #121212;
+  border-radius: 10px;
+}
+.c0146 img {
+  height: 6.250em;
+  width: auto;
+}
+.c0147 a {
+  display: inline;
+  padding: 0;
+}
+.c0148 {
+  margin-bottom: 1.5em;
+}
+.c0149 {
+  justify-content: center;
+}
+.c0150 {
+  background: none;
+  text-align: center;
+  box-shadow: none;
+}
+.c0150:hover {
+  box-shadow: none;
+}
+.c0151 {
+  justify-content: center;
+}
+.c0152 {
+  border-radius: 0.5em;
+}
+</style><style data-jss="">
+.c0139 {
+  background: #222;
+  margin: auto;
+}
+.c0140 {
+  display: inline;
+}
+.c0141 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 20px;
+  margin: 20px 40px;
+  text-align: center;
+}
+.c0142 {
+  font-size: 40px;
+}
+.c0143 {
+  grid-column: span 4;
+  font-size: 15px;
+  color: #bbb;
+}
+.c0144 {
+  grid-column: span 4;
+  margin-top: 10px;
+  font-size: 20px;
+}
+.c0145 {
+  margin: 20px 40px;
+  font-size: 20px;
+  text-align: center;
+}
+</style><style data-jss="">
+.c0153 {
+  padding: 16px !important;
+  color: #fff;
+  background: #222;
+  box-shadow: rgba(250,250,250,0.6) 0px 0px 1rem 0px;
+  font-size: 20px;
+  border-radius: 1rem;
+  text-align: center;
+  transition: box-shadow ease-in-out 0.2s, transform ease-in-out 0.2s;
+  margin: 20px auto;
+}
+.c0153:hover {
+  box-shadow: rgba(250,250,250,0.6) 0px 0px 1.1rem 0px;
+  transform: scale(1.1);
+  color: #fff;
+}
+.c0153 svg {
+  height: 1em;
+  position: relative;
+  top: 0.125em;
+}
+</style><style data-jss="">
+.c0187 {
+  display: grid;
+  padding: 20px;
+  padding-top: 0;
+  grid-template-columns: repeat(4, minmax(max-content, 1fr));
+}
+.c0187 div {
+  margin: auto;
+  padding: 10px;
+}
+.c0188 {
+  grid-column: 1 / -1;
+  margin: 20px auto !important;
+}
+.c0189 {
+  border-bottom: 1px solid #fff;
+  width: 100%;
+  text-align: center;
+}
+.c0190 {
+  display: none;
+}
+.c0191 {
+  width: 60px;
+  margin: auto !important;
+}
+@media (max-width: 1500px) {
+  .c0190 {
+    display: initial;
+    border-right: 1px solid #fff;
+  }
+  .c0187 {
+    grid-template-columns: repeat(2, minmax(max-content, 1fr));
+  }
+  .c0187 div {
+    margin: 0;
+  }
+  .c0189 {
+    display: none;
+  }
+  .c0192 {
+    border-top: 1px solid #fff;
+  }
+}
+</style><style data-jss="">
+.c0178 button {
+  display: block;
+  margin-left: auto;
+  margin-right: 0;
+  margin-top: 10px;
+}
+</style><style data-jss="">
+.c0196 {
+  margin-right: 1.5em;
+}
+.c0196 svg {
+  vertical-align: middle;
+  height: 1.25em;
+  fill: #333;
+}
+.c0197 {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  margin: 0 !important;
+  max-width: 75vw;
+}
+.c0198 {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  margin: 0 !important;
+  max-width: 30vw;
+}
+@media (max-width: 804px) {
+  .c0198 {
+    max-width: 75vw;
+  }
+}
+.c0199 {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 15px;
+  padding-bottom: 5px;
+}
+</style><style data-jss="">
+.c01101 {
+  padding: 0 !important;
+}
+.c01101 button {
+  margin: 0;
+  margin-bottom: 0.4em;
+  float: right;
+}
+.c01102 {
+  padding-left: 2.75rem;
+}
+.c01103 {
+  margin-top: 20px;
+}
+</style><style data-jss="">
+.c0174 {
+  padding: 25px;
+}
+.c0175 {
+  margin-top: 25px;
+}
+.c0176 svg {
+  vertical-align: middle;
+  height: 16px;
+  fill: #333;
+}
+</style><style data-jss="">
+.c01100 {
+  margin-right: 10px;
+}
+</style><style data-jss="">
+.c0128 {
+  background-color: transparent !important;
+}
+.c0129 {
+  padding-left: 0.1em !important;
+  padding-right: 0.1em !important;
+}
+</style><style data-jss="">
+.c0168 {
+  margin-bottom: 20px;
+  background: #222;
+}
+.c0168 .frame__body {
+  padding: 20px;
+}
+.c0169 {
+  position: fixed;
+  pointer-events: none;
+  background: #fff;
+  color: #222;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin: 5px;
+  top: 0;
+  left: 0;
+}
+</style><style data-jss="">
+.c0154 {
+  margin-bottom: 1em;
+  padding-bottom: 0.625em;
+  background: #222;
+}
+.c0155 {
+  border: 1px var(--cirrus-success) solid;
+}
+.c0156 a {
+  display: inline;
+  padding: 0;
+}
+.c0156 p {
+  line-height: 1.4em;
+  font-size: 1em;
+  margin-top: 0;
+}
+.c0156 pre {
+  white-space: pre-wrap;
+}
+.c0157 {
+  margin: 0.625em;
+  width: 80%;
+}
+.c0158 {
+  margin-top: 0.75rem !important;
+  margin-bottom: 0 !important;
+  cursor: pointer;
+  display: inline-block;
+  transition: opacity ease-in-out 0.2s;
+  color: var(--cirrus-primary);
+}
+.c0159 {
+  opacity: 0.6;
+  pointer-events: none;
+  cursor: default;
+}
+.c0160 {
+  background: #111;
+}
+.c0161 {
+  background: #111;
+  color: #fff !important;
+}
+.c0162 {
+  background: #222;
+  color: #fff;
+  text-transform: capitalize !important;
+}
+.c0162:hover {
+  background: #333;
+}
+</style><style data-jss="">
+.c0130 {
+  font-family: inherit;
+}
+.c0131 {
+  display: grid;
+  grid-template-columns: repeat(3, max-content);
+}
+.c0131 div {
+  margin: auto;
+  padding: 5px 10px;
+  text-align: center;
+  white-space: nowrap;
+}
+.c0132 {
+  border-bottom: 1px solid #fff;
+  width: 100%;
+  text-align: center;
+}
+.c0133 {
+  overflow: hidden;
+  width: 300px;
+}
+.c0134 {
+  display: none;
+}
+.c0135 {
+  width: 60px;
+  margin: auto;
+}
+.c0136 {
+  padding: 0 3rem;
+  padding-top: 3rem;
+}
+.c0136 h5 {
+  color: #fff !important;
+}
+.c0137 {
+  max-height: 60vh !important;
+}
+@media (max-width: 768px) {
+  .c0134 {
+    display: initial;
+    border-right: 1px solid #fff;
+  }
+  .c0131 {
+    grid-template-columns: repeat(2, minmax(max-content, 1fr));
+  }
+  .c0131 div {
+    margin: 0;
+  }
+  .c0132 {
+    display: none;
+  }
+  .c0138 {
+    border-top: 1px solid #fff;
+  }
+  .c0133 {
+    width: initial;
+    max-width: 300px;
+  }
+}
+</style><script charset="utf-8" src="Challenges%20|%20corCTF%202021_files/route-scoreboard.js"></script><script charset="utf-8" src="Challenges%20|%20corCTF%202021_files/route-profile.js"></script><script charset="utf-8" src="Challenges%20|%20corCTF%202021_files/route-home.js"></script></head><body><svg xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="position: absolute; width: 0; height: 0" aria-hidden="true" id="__SVG_SPRITE_NODE__"><symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ffffff" id="clock"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"></path><path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path></symbol><symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="#ffffff" id="envelope-open"><path d="M512 464c0 26.51-21.49 48-48 48H48c-26.51 0-48-21.49-48-48V200.724a48 48 0 0 1 18.387-37.776c24.913-19.529 45.501-35.365 164.2-121.511C199.412 29.17 232.797-.347 256 .003c23.198-.354 56.596 29.172 73.413 41.433 118.687 86.137 139.303 101.995 164.2 121.512A48 48 0 0 1 512 200.724V464zm-65.666-196.605c-2.563-3.728-7.7-4.595-11.339-1.907-22.845 16.873-55.462 40.705-105.582 77.079-16.825 12.266-50.21 41.781-73.413 41.43-23.211.344-56.559-29.143-73.413-41.43-50.114-36.37-82.734-60.204-105.582-77.079-3.639-2.688-8.776-1.821-11.339 1.907l-9.072 13.196a7.998 7.998 0 0 0 1.839 10.967c22.887 16.899 55.454 40.69 105.303 76.868 20.274 14.781 56.524 47.813 92.264 47.573 35.724.242 71.961-32.771 92.263-47.573 49.85-36.179 82.418-59.97 105.303-76.868a7.998 7.998 0 0 0 1.839-10.967l-9.071-13.196z"></path></symbol><symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 283 80" id="ctftime"><path fill="#e3000b" d="M0 80h283V0H0l33 40z"></path><path fill="#fff" d="M62 58h18v-6H69V28h11v-7H62zm24-30h6v30h7V28h5v-7H86zm24 30h8V43h9v-6h-9v-9h11v-7h-19zm73-33h5v33h5V25h5v-4h-15zm20-4h4v37h-4zm21 14l-5-14h-4v37h4V32l5 13 5-13v26h5V21h-5zm21 19V42h7v-5h-7V25h12l1-4h-18v37h18l-1-4zM136 21v37h39V21zm34 32h-29V26h29v27m-16-14l-6 6 4 4 9-9-16-16h-7z"></path></symbol><symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" fill="#ffffff" id="trophy"><path d="M552 64H448V24c0-13.3-10.7-24-24-24H152c-13.3 0-24 10.7-24 24v40H24C10.7 64 0 74.7 0 88v56c0 35.7 22.5 72.4 61.9 100.7 31.5 22.7 69.8 37.1 110 41.7C203.3 338.5 240 360 240 360v72h-48c-35.3 0-64 20.7-64 56v12c0 6.6 5.4 12 12 12h296c6.6 0 12-5.4 12-12v-12c0-35.3-28.7-56-64-56h-48v-72s36.7-21.5 68.1-73.6c40.3-4.6 78.6-19 110-41.7 39.3-28.3 61.9-65 61.9-100.7V88c0-13.3-10.7-24-24-24zM99.3 192.8C74.9 175.2 64 155.6 64 144v-16h64.2c1 32.6 5.8 61.2 12.8 86.2-15.1-5.2-29.2-12.4-41.7-21.4zM512 144c0 16.1-17.7 36.1-35.3 48.8-12.5 9-26.7 16.2-41.8 21.4 7-25 11.8-53.6 12.8-86.2H512v16z"></path></symbol><symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="#ffffff" id="address-book"><path d="M436 160c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h320c26.5 0 48-21.5 48-48v-48h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20zm-228-32c35.3 0 64 28.7 64 64s-28.7 64-64 64-64-28.7-64-64 28.7-64 64-64zm112 236.8c0 10.6-10 19.2-22.4 19.2H118.4C106 384 96 375.4 96 364.8v-19.2c0-31.8 30.1-57.6 67.2-57.6h5c12.3 5.1 25.7 8 39.8 8s27.6-2.9 39.8-8h5c37.1 0 67.2 25.8 67.2 57.6v19.2z"></path></symbol><symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" fill="#ffffff" id="user-circle"><path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm0 96c48.6 0 88 39.4 88 88s-39.4 88-88 88-88-39.4-88-88 39.4-88 88-88zm0 344c-58.7 0-111.3-26.6-146.5-68.2 18.8-35.4 55.6-59.8 98.5-59.8 2.4 0 4.8.4 7.1 1.1 13 4.2 26.6 6.9 40.9 6.9 14.3 0 28-2.7 40.9-6.9 2.3-.7 4.7-1.1 7.1-1.1 42.9 0 79.7 24.4 98.5 59.8C359.3 421.4 306.7 448 248 448z"></path></symbol><symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ffffff" id="rank"><path d="M0 0h24v24H0z" fill="none"></path><path d="M10 20h4V4h-4v16zm-6 0h4v-8H4v8zM16 9v11h4V9h-4z"></path></symbol></svg><div class="c0125"><div class="tab-container tabs-center c018"><ul class="c017"><div class="row c0111"><div class="c019"><h3>corCTF 2021</h3></div><div class="c0110"><li class=""><a href="https://2021.cor.team/" class="c016">Home</a></li><li class=""><a href="https://2021.cor.team/scores" class="c016">Scoreboard</a></li><li class=""><a href="https://2021.cor.team/profile" class="c016">Profile</a></li><li class="selected"><a href="https://2021.cor.team/challs" class="c016">Challenges</a></li><li><a class="c016" href="#" native="true">Logout</a></li></div></div></ul></div><div class="c0126"><div class="row c0167"><div class="col-3"><div class="frame c0166"><div class="frame__body"><div class="frame__title title">Filters</div><div class="c0165"><div class="form-ext-control form-ext-checkbox"><input id="show-solved" class="form-ext-input" type="checkbox"><label for="show-solved" class="form-ext-label">Show Solved (6/46 solved)</label></div></div></div></div><div class="frame c0166"><div class="frame__body"><div class="frame__title title">Categories</div><div class="form-ext-control form-ext-checkbox"><input id="category-crypto" data-category="crypto" class="form-ext-input" type="checkbox"><label for="category-crypto" class="form-ext-label">crypto (3/12 solved)</label></div><div class="form-ext-control form-ext-checkbox"><input id="category-meta" data-category="meta" class="form-ext-input" type="checkbox"><label for="category-meta" class="form-ext-label">meta (2/3 solved)</label></div><div class="form-ext-control form-ext-checkbox"><input id="category-misc" data-category="misc" class="form-ext-input" type="checkbox"><label for="category-misc" class="form-ext-label">misc (0/4 solved)</label></div><div class="form-ext-control form-ext-checkbox"><input id="category-pwn" data-category="pwn" class="form-ext-input" type="checkbox"><label for="category-pwn" class="form-ext-label">pwn (0/8 solved)</label></div><div class="form-ext-control form-ext-checkbox"><input id="category-rev" data-category="rev" class="form-ext-input" type="checkbox"><label for="category-rev" class="form-ext-label">rev (1/8 solved)</label></div><div class="form-ext-control form-ext-checkbox"><input id="category-web" data-category="web" class="form-ext-input" type="checkbox"><label for="category-web" class="form-ext-label">web (0/11 solved)</label></div></div></div></div><div class="col-6"><div class="frame c0154 "><div class="frame__body"><div class="row u-no-padding"><div class="col-6 u-no-padding"><div class="frame__title title">meta/shell</div><div class="frame__subtitle u-no-margin">ehhthing</div></div><div class="col-6 u-no-padding u-text-right"><a class="c0158 ">0 solves / 0 points</a></div></div><div class="content-no-padding u-center"><div class="divider c0157"></div></div><div class="c0156 frame__subtitle"><div class="markup"><p>If
+ you need access to a container with a shell at a datacenter nearby, you
+ can make one here. By default python 2/3, pwntools and g++ are 
+installed. There is no flag for this challenge.</p>
+
+<p><a href="https://shell.be.ax/" target="_blank">https://shell.be.ax</a></p></div></div><form class="form-section"><div class="form-group"><input autocomplete="off" autocorrect="off" class="form-group-input input-small c0161  " placeholder="Flag"><button class="form-group-btn btn-small c0162">Submit</button></div></form></div></div><div class="frame c0154 "><div class="frame__body"><div class="row u-no-padding"><div class="col-6 u-no-padding"><div class="frame__title title">web/devme</div><div class="frame__subtitle u-no-margin">ehhthing</div></div><div class="col-6 u-no-padding u-text-right"><a class="c0158 ">264 solves / 323 points</a></div></div><div class="content-no-padding u-center"><div class="divider c0157"></div></div><div class="c0156 frame__subtitle"><div class="markup"><p>an ex-google, ex-facebook tech lead recommended me this book!</p>
+
+<p><a href="https://devme.be.ax/" target="_blank">https://devme.be.ax</a></p></div></div><form class="form-section"><div class="form-group"><input autocomplete="off" autocorrect="off" class="form-group-input input-small c0161  " placeholder="Flag"><button class="form-group-btn btn-small c0162">Submit</button></div></form></div></div><div class="frame c0154 "><div class="frame__body"><div class="row u-no-padding"><div class="col-6 u-no-padding"><div class="frame__title title">pwn/Chainblock</div><div class="frame__subtitle u-no-margin">EhhThing</div></div><div class="col-6 u-no-padding u-text-right"><a class="c0158 ">176 solves / 394 points</a></div></div><div class="content-no-padding u-center"><div class="divider c0157"></div></div><div class="c0156 frame__subtitle"><div class="markup"><p>I made a chain of blocks!</p>
+
+<p><code>nc pwn.be.ax 5000</code></p></div></div><form class="form-section"><div class="form-group"><input autocomplete="off" autocorrect="off" class="form-group-input input-small c0161  " placeholder="Flag"><button class="form-group-btn btn-small c0162">Submit</button></div></form><div><p class="frame__subtitle u-no-margin">Downloads</p><div class="tag-container"><div class="tag c0160"><a native="true" download="" href="https://corctf2021-files.storage.googleapis.com/uploads/be4a315b9034d28ea474fd599f9e1a686433bc23f9e1c2dbb82b417fb3e22263/chainblock.tar.xz">chainblock.tar.xz</a></div></div></div></div></div><div class="frame c0154 "><div class="frame__body"><div class="row u-no-padding"><div class="col-6 u-no-padding"><div class="frame__title title">misc/yeetcode</div><div class="frame__subtitle u-no-margin">quintec</div></div><div class="col-6 u-no-padding u-text-right"><a class="c0158 ">165 solves / 402 points</a></div></div><div class="content-no-padding u-center"><div class="divider c0157"></div></div><div class="c0156 frame__subtitle"><div class="markup"><p>Brush up on your coding skills and ace your next interview with YeetCode! Flag is at ./flag.txt</p>
+
+<p><a href="https://yeetcode.be.ax/" target="_blank">https://yeetcode.be.ax</a></p></div></div><form class="form-section"><div class="form-group"><input autocomplete="off" autocorrect="off" class="form-group-input input-small c0161  " placeholder="Flag"><button class="form-group-btn btn-small c0162">Submit</button></div></form><div><p class="frame__subtitle u-no-margin">Downloads</p><div class="tag-container"><div class="tag c0160"><a native="true" download="" href="https://corctf2021-files.storage.googleapis.com/uploads/75e762db9db54dc33c0fb7939442e02d94759102579fc0151498919e00677d2e/yeetcode.tar.xz">yeetcode.tar.xz</a></div></div></div></div></div><div class="frame c0154 "><div class="frame__body"><div class="row u-no-padding"><div class="col-6 u-no-padding"><div class="frame__title title">web/buyme</div><div class="frame__subtitle u-no-margin">strellic</div></div><div class="col-6 u-no-padding u-text-right"><a class="c0158 ">110 solves / 441 points</a></div></div><div class="content-no-padding u-center"><div class="divider c0157"></div></div><div class="c0156 frame__subtitle"><div class="markup"><p>I made a new site to buy flags! But no hoarding, okay :&lt;</p>
+
+<p><a href="https://buyme.be.ax/" target="_blank">https://buyme.be.ax</a></p></div></div><form class="form-section"><div class="form-group"><input autocomplete="off" autocorrect="off" class="form-group-input input-small c0161  " placeholder="Flag"><button class="form-group-btn btn-small c0162">Submit</button></div></form><div><p class="frame__subtitle u-no-margin">Downloads</p><div class="tag-container"><div class="tag c0160"><a native="true" download="" href="https://corctf2021-files.storage.googleapis.com/uploads/74116a5a7835ef4d7c63e8a29023d77b66f0d481898bc7f9ffcf1c92f1429459/buyme.tar.xz">buyme.tar.xz</a></div></div></div></div></div><div class="frame c0154 "><div class="frame__body"><div class="row u-no-padding"><div class="col-6 u-no-padding"><div class="frame__title title">crypto/supercomputer</div><div class="frame__subtitle u-no-margin">quintec</div></div><div class="col-6 u-no-padding u-text-right"><a class="c0158 ">85 solves / 457 points</a></div></div><div class="content-no-padding u-center"><div class="divider c0157"></div></div><div class="c0156 frame__subtitle"><div class="markup"><p>I ran this code with a supercomputer from the future to encrypt the flag, just get your own and decryption should be simple!</p></div></div><form class="form-section"><div class="form-group"><input autocomplete="off" autocorrect="off" class="form-group-input input-small c0161  " placeholder="Flag"><button class="form-group-btn btn-small c0162">Submit</button></div></form><div><p class="frame__subtitle u-no-margin">Downloads</p><div class="tag-container"><div class="tag c0160"><a native="true" download="" href="https://corctf2021-files.storage.googleapis.com/uploads/c3daa420477c9e4d910ff7432f2bec1697ca83c05f8f82022b2fb1c1c6cb9610/supercomputer.tar.xz">supercomputer.tar.xz</a></div></div></div></div></div><div class="frame c0154 "><div class="frame__body"><div class="row u-no-padding"><div class="col-6 u-no-padding"><div class="frame__title title">pwn/CShell</div><div class="frame__subtitle u-no-margin">0x5a</div></div><div class="col-6 u-no-padding u-text-right"><a class="c0158 ">81 solves / 459 points</a></div></div><div class="content-no-padding u-center"><div class="divider c0157"></div></div><div class="c0156 frame__subtitle"><div class="markup"><p>My
+ friend Hevr thinks I can't code, so I decided to prove him wrong by 
+making a restricted shell in which he is unable to play squad. I must 
+add that my programming skills are very cache money...</p>
+
+<p><code>nc pwn.be.ax 5001</code></p>
+
+<p><a href="https://files.be.ax/Cshell-ad77318da5830eee2cad25fab632c0e457bad56bac406e6097d84c922e449c81/Cshell.tar.xz" target="_blank">Cshell.tar.xz</a></p></div></div><form class="form-section"><div class="form-group"><input autocomplete="off" autocorrect="off" class="form-group-input input-small c0161  " placeholder="Flag"><button class="form-group-btn btn-small c0162">Submit</button></div></form></div></div><div class="frame c0154 "><div class="frame__body"><div class="row u-no-padding"><div class="col-6 u-no-padding"><div class="frame__title title">web/drinkme</div><div class="frame__subtitle u-no-margin">drakon</div></div><div class="col-6 u-no-padding u-text-right"><a class="c0158 ">72 solves / 464 points</a></div></div><div class="content-no-padding u-center"><div class="divider c0157"></div></div><div class="c0156 frame__subtitle"><div class="markup"><p>Are
+ you thirsty? Why don't you try some of our drinks at our new store, 
+drinkme! Leave a message on the wall too when you're done.</p>
+
+<p>NOTE: Flag is at /var/flag</p>
+
+<p>NOTE: This challenge uses per-team instances. Please test locally and don't launch one until you have a working exploit.</p>
+
+<p>NOTE: The drinkme instancer takes a bit of time (&lt; 1 min) to start the container, please be patient.</p>
+
+<p><a href="https://drinkme.be.ax/" target="_blank">https://drinkme.be.ax</a></p></div></div><form class="form-section"><div class="form-group"><input autocomplete="off" autocorrect="off" class="form-group-input input-small c0161  " placeholder="Flag"><button class="form-group-btn btn-small c0162">Submit</button></div></form><div><p class="frame__subtitle u-no-margin">Downloads</p><div class="tag-container"><div class="tag c0160"><a native="true" download="" href="https://corctf2021-files.storage.googleapis.com/uploads/06dd8158d79ab135162f50391ed442b6d5adbfcc1137c5a6bcd6cbd6461574d7/drinkme.tar.xz">drinkme.tar.xz</a></div></div></div></div></div><div class="frame c0154 "><div class="frame__body"><div class="row u-no-padding"><div class="col-6 u-no-padding"><div class="frame__title title">web/phpme</div><div class="frame__subtitle u-no-margin">strellic</div></div><div class="col-6 u-no-padding u-text-right"><a class="c0158 ">64 solves / 469 points</a></div></div><div class="content-no-padding u-center"><div class="divider c0157"></div></div><div class="c0156 frame__subtitle"><div class="markup"><p>"This is what normal PHP CTF challenges look like, right?" - A web dev who barely knows PHP</p>
+
+<p><a href="https://phpme.be.ax/" target="_blank">https://phpme.be.ax</a>
+<a href="https://adminbot.be.ax/phpme" target="_blank">https://adminbot.be.ax/phpme</a></p></div></div><form class="form-section"><div class="form-group"><input autocomplete="off" autocorrect="off" class="form-group-input input-small c0161  " placeholder="Flag"><button class="form-group-btn btn-small c0162">Submit</button></div></form></div></div><div class="frame c0154 "><div class="frame__body"><div class="row u-no-padding"><div class="col-6 u-no-padding"><div class="frame__title title">rev/AliceInCeptionland</div><div class="frame__subtitle u-no-margin">goomadow-belsahound</div></div><div class="col-6 u-no-padding u-text-right"><a class="c0158 ">56 solves / 473 points</a></div></div><div class="content-no-padding u-center"><div class="divider c0157"></div></div><div class="c0156 frame__subtitle"><div class="markup"><p>Our
+ dear beloved Alice is undergoing a cerebral attack by some of the 
+fiercest enemies known to man. Quick, get in there and help her!</p>
+
+<p><a href="https://files.be.ax/AliceInCeptionland-be0f0610e7eeef87db7995850b6db4f459883790064816be5b4edc25fd4d19d6/AliceInCeptionland.tar.xz" target="_blank">AliceInCeptionland</a></p></div></div><form class="form-section"><div class="form-group"><input autocomplete="off" autocorrect="off" class="form-group-input input-small c0161  " placeholder="Flag"><button class="form-group-btn btn-small c0162">Submit</button></div></form></div></div><div class="frame c0154 "><div class="frame__body"><div class="row u-no-padding"><div class="col-6 u-no-padding"><div class="frame__title title">crypto/babyrsa</div><div class="frame__subtitle u-no-margin">willwam845</div></div><div class="col-6 u-no-padding u-text-right"><a class="c0158 ">50 solves / 476 points</a></div></div><div class="content-no-padding u-center"><div class="divider c0157"></div></div><div class="c0156 frame__subtitle"><div class="markup"><p>discord is the best place to store secrets</p></div></div><form class="form-section"><div class="form-group"><input autocomplete="off" autocorrect="off" class="form-group-input input-small c0161  " placeholder="Flag"><button class="form-group-btn btn-small c0162">Submit</button></div></form><div><p class="frame__subtitle u-no-margin">Downloads</p><div class="tag-container"><div class="tag c0160"><a native="true" download="" href="https://corctf2021-files.storage.googleapis.com/uploads/95d3b5989ec6c7db7c5cae48c5a4a1f5193178d692528df391a46af119569458/babyrsa.PNG">babyrsa.PNG</a></div><div class="tag c0160"><a native="true" download="" href="https://corctf2021-files.storage.googleapis.com/uploads/8e686529c507bc759a7658f06a185b976782a47577b327dafb9787a1efeb00d8/output.txt">output.txt</a></div><div class="tag c0160"><a native="true" download="" href="https://corctf2021-files.storage.googleapis.com/uploads/4e6a3bce81a711f96d8b3699b0d2f99210a6523fb905a96ece1662c9c187c524/script.py">script.py</a></div></div></div></div></div><div class="frame c0154 "><div class="frame__body"><div class="row u-no-padding"><div class="col-6 u-no-padding"><div class="frame__title title">web/readme</div><div class="frame__subtitle u-no-margin">strellic</div></div><div class="col-6 u-no-padding u-text-right"><a class="c0158 ">46 solves / 478 points</a></div></div><div class="content-no-padding u-center"><div class="divider c0157"></div></div><div class="c0156 frame__subtitle"><div class="markup"><p>My
+ new site readme is the ultimate tool for readers everywhere. Remove 
+clutter from any site and also fetch the next chapters with the click of
+ a button.</p>
+
+<p><a href="https://readme.be.ax/" target="_blank">https://readme.be.ax</a></p></div></div><form class="form-section"><div class="form-group"><input autocomplete="off" autocorrect="off" class="form-group-input input-small c0161  " placeholder="Flag"><button class="form-group-btn btn-small c0162">Submit</button></div></form><div><p class="frame__subtitle u-no-margin">Downloads</p><div class="tag-container"><div class="tag c0160"><a native="true" download="" href="https://corctf2021-files.storage.googleapis.com/uploads/894f1cae1f1ad18a03258cbb6e98cb5d2f082be0f4ec65798707ea8a153c649d/readme.tar.xz">readme.tar.xz</a></div></div></div></div></div><div class="frame c0154 "><div class="frame__body"><div class="row u-no-padding"><div class="col-6 u-no-padding"><div class="frame__title title">rev/zoom_zoom_vision</div><div class="frame__subtitle u-no-margin">goomadow-belsahound</div></div><div class="col-6 u-no-padding u-text-right"><a class="c0158 ">40 solves / 482 points</a></div></div><div class="content-no-padding u-center"><div class="divider c0157"></div></div><div class="c0156 frame__subtitle"><div class="markup"><p>Something is wrong, I'm losing my vision. Please help me recover my vision.</p></div></div><form class="form-section"><div class="form-group"><input autocomplete="off" autocorrect="off" class="form-group-input input-small c0161  " placeholder="Flag"><button class="form-group-btn btn-small c0162">Submit</button></div></form><div><p class="frame__subtitle u-no-margin">Downloads</p><div class="tag-container"><div class="tag c0160"><a native="true" download="" href="https://corctf2021-files.storage.googleapis.com/uploads/bca7fafd4d4c86e3e704ab0392d9f61c6b43b6f7cae70d6778588cd0ce86302c/zoom_zoom_vision.zip">zoom_zoom_vision.zip</a></div></div></div></div></div><div class="frame c0154 "><div class="frame__body"><div class="row u-no-padding"><div class="col-6 u-no-padding"><div class="frame__title title">crypto/babypad</div><div class="frame__subtitle u-no-margin">willwam845</div></div><div class="col-6 u-no-padding u-text-right"><a class="c0158 ">35 solves / 484 points</a></div></div><div class="content-no-padding u-center"><div class="divider c0157"></div></div><div class="c0156 frame__subtitle"><div class="markup"><p>padding makes everything secure right</p>
+
+<p><code>nc babypad.be.ax 1337</code></p>
+
+<p>note: if you are finding that your exploit script is very slow, it is highly recommended to use a shell from <code>meta/shell</code></p></div></div><form class="form-section"><div class="form-group"><input autocomplete="off" autocorrect="off" class="form-group-input input-small c0161  " placeholder="Flag"><button class="form-group-btn btn-small c0162">Submit</button></div></form><div><p class="frame__subtitle u-no-margin">Downloads</p><div class="tag-container"><div class="tag c0160"><a native="true" download="" href="https://corctf2021-files.storage.googleapis.com/uploads/6539ffd602ec465acea2959fa500efe2e2ded0d1e56b39a6ef3d5f9709a5cf46/server.py">server.py</a></div></div></div></div></div><div class="frame c0154 "><div class="frame__body"><div class="row u-no-padding"><div class="col-6 u-no-padding"><div class="frame__title title">crypto/babyrand</div><div class="frame__subtitle u-no-margin">willwam845</div></div><div class="col-6 u-no-padding u-text-right"><a class="c0158 ">29 solves / 487 points</a></div></div><div class="content-no-padding u-center"><div class="divider c0157"></div></div><div class="c0156 frame__subtitle"><div class="markup"><p>you can't break an lcg with only 2 outputs right</p></div></div><form class="form-section"><div class="form-group"><input autocomplete="off" autocorrect="off" class="form-group-input input-small c0161  " placeholder="Flag"><button class="form-group-btn btn-small c0162">Submit</button></div></form><div><p class="frame__subtitle u-no-margin">Downloads</p><div class="tag-container"><div class="tag c0160"><a native="true" download="" href="https://corctf2021-files.storage.googleapis.com/uploads/b900b5b2e49a564ffc022c70b9ad6f2e47f203daa08ef95fb3dafd396c1f92ff/output.txt">output.txt</a></div><div class="tag c0160"><a native="true" download="" href="https://corctf2021-files.storage.googleapis.com/uploads/7dfa44a9f6401b2dab2668c65cfbe0fdbe164904caa6db525ca83fb8728108fd/script.py">script.py</a></div></div></div></div></div><div class="frame c0154 "><div class="frame__body"><div class="row u-no-padding"><div class="col-6 u-no-padding"><div class="frame__title title">crypto/LCG_k</div><div class="frame__subtitle u-no-margin">qopruzjf</div></div><div class="col-6 u-no-padding u-text-right"><a class="c0158 ">25 solves / 489 points</a></div></div><div class="content-no-padding u-center"><div class="divider c0157"></div></div><div class="c0156 frame__subtitle"><div class="markup"><p>Can you sign my message for me?</p>
+
+<p><code>nc crypto.be.ax 6002</code></p></div></div><form class="form-section"><div class="form-group"><input autocomplete="off" autocorrect="off" class="form-group-input input-small c0161  " placeholder="Flag"><button class="form-group-btn btn-small c0162">Submit</button></div></form><div><p class="frame__subtitle u-no-margin">Downloads</p><div class="tag-container"><div class="tag c0160"><a native="true" download="" href="https://corctf2021-files.storage.googleapis.com/uploads/6c248e65183519624e3b41bfb54c44d532fc24c9989bfeb8b2c8979b0aef169b/source.py">source.py</a></div></div></div></div></div><div class="frame c0154 "><div class="frame__body"><div class="row u-no-padding"><div class="col-6 u-no-padding"><div class="frame__title title">crypto/bank</div><div class="frame__subtitle u-no-margin">quintec</div></div><div class="col-6 u-no-padding u-text-right"><a class="c0158 ">25 solves / 489 points</a></div></div><div class="content-no-padding u-center"><div class="divider c0157"></div></div><div class="c0156 frame__subtitle"><div class="markup"><p>To
+ keep up with the latest trends CoR is introducing a quantum bank for 
+all your secure banking needs. Unfortunately no one on CoR actually 
+knows how quantum computing works, least of all me...</p>
+
+<p><code>nc crypto.be.ax 6005</code></p></div></div><form class="form-section"><div class="form-group"><input autocomplete="off" autocorrect="off" class="form-group-input input-small c0161  " placeholder="Flag"><button class="form-group-btn btn-small c0162">Submit</button></div></form><div><p class="frame__subtitle u-no-margin">Downloads</p><div class="tag-container"><div class="tag c0160"><a native="true" download="" href="https://corctf2021-files.storage.googleapis.com/uploads/88f854c323bb5c45590c202711634ff1c9d2ab5a71f8da530cbbf7ca4dd2ee3f/bank.zip">bank.zip</a></div></div></div></div></div><div class="frame c0154 "><div class="frame__body"><div class="row u-no-padding"><div class="col-6 u-no-padding"><div class="frame__title title">misc/flagbot</div><div class="frame__subtitle u-no-margin">Strellic</div></div><div class="col-6 u-no-padding u-text-right"><a class="c0158 ">23 solves / 490 points</a></div></div><div class="content-no-padding u-center"><div class="divider c0157"></div></div><div class="c0156 frame__subtitle"><div class="markup"><p>Make
+ sure you joined our Discord server! Why don't you check out my new 
+robot friend FlagBot in #bot-spam, I think you'll like the song he's 
+playing...</p>
+
+<p>NOTE: This is NOT an OSINT challenge. The bot is playing an unlisted 
+YouTube video and the flag is in the description. This is not a guessing
+ challenge.</p></div></div><form class="form-section"><div class="form-group"><input autocomplete="off" autocorrect="off" class="form-group-input input-small c0161  " placeholder="Flag"><button class="form-group-btn btn-small c0162">Submit</button></div></form><div><p class="frame__subtitle u-no-margin">Downloads</p><div class="tag-container"><div class="tag c0160"><a native="true" download="" href="https://corctf2021-files.storage.googleapis.com/uploads/cfdaabf289f8bdc1ee01f48c924909209555703b4f87e5ea0c5ffb1b3385e7aa/flagbot_dist_updated.zip">flagbot_dist_updated.zip</a></div></div></div></div></div><div class="frame c0154 "><div class="frame__body"><div class="row u-no-padding"><div class="col-6 u-no-padding"><div class="frame__title title">crypto/mystery_stream</div><div class="frame__subtitle u-no-margin">qopruzjf</div></div><div class="col-6 u-no-padding u-text-right"><a class="c0158 ">10 solves / 496 points</a></div></div><div class="content-no-padding u-center"><div class="divider c0157"></div></div><div class="c0156 frame__subtitle"><div class="markup"><p>Mysterious stream cipher. Wonder what the seed was...</p></div></div><form class="form-section"><div class="form-group"><input autocomplete="off" autocorrect="off" class="form-group-input input-small c0161  " placeholder="Flag"><button class="form-group-btn btn-small c0162">Submit</button></div></form><div><p class="frame__subtitle u-no-margin">Downloads</p><div class="tag-container"><div class="tag c0160"><a native="true" download="" href="https://corctf2021-files.storage.googleapis.com/uploads/dadb9a86a37112667ba0dd20c4c9e45fa6dde1c46da5580ceaa082965902abb3/mystery_stream.tar.xz">mystery_stream.tar.xz</a></div></div></div></div></div><div class="frame c0154 "><div class="frame__body"><div class="row u-no-padding"><div class="col-6 u-no-padding"><div class="frame__title title">misc/smogofwar</div><div class="frame__subtitle u-no-margin">strellic</div></div><div class="col-6 u-no-padding u-text-right"><a class="c0158 ">7 solves / 497 points</a></div></div><div class="content-no-padding u-center"><div class="divider c0157"></div></div><div class="c0156 frame__subtitle"><div class="markup"><p>Hey,
+ I made a chess website to play my favorite variant, smog of war! Why 
+don't you check it out and play against my AI. He has some nasty 
+surprises, but if you beat him I'll give you a flag.. good luck :)</p>
+
+<p><a href="https://smogofwar.be.ax/" target="_blank">https://smogofwar.be.ax</a></p></div></div><form class="form-section"><div class="form-group"><input autocomplete="off" autocorrect="off" class="form-group-input input-small c0161  " placeholder="Flag"><button class="form-group-btn btn-small c0162">Submit</button></div></form><div><p class="frame__subtitle u-no-margin">Downloads</p><div class="tag-container"><div class="tag c0160"><a native="true" download="" href="https://corctf2021-files.storage.googleapis.com/uploads/390d97bab7d57e12aeff88a31d4fe0414f3e8bd1aea22451c57197ba9fb10e1b/smogofwar.zip">smogofwar.zip</a></div></div></div></div></div><div class="frame c0154 "><div class="frame__body"><div class="row u-no-padding"><div class="col-6 u-no-padding"><div class="frame__title title">crypto/fried_rice</div><div class="frame__subtitle u-no-margin">qopruzjf</div></div><div class="col-6 u-no-padding u-text-right"><a class="c0158 ">6 solves / 497 points</a></div></div><div class="content-no-padding u-center"><div class="divider c0157"></div></div><div class="c0156 frame__subtitle"><div class="markup"><p>Kind of hungry... guess I'll make some fried rice.</p>
+
+<p>NOTE: The server has a time limit of 5 minutes.</p>
+
+<p><code>nc crypto.be.ax 6003</code></p></div></div><form class="form-section"><div class="form-group"><input autocomplete="off" autocorrect="off" class="form-group-input input-small c0161  " placeholder="Flag"><button class="form-group-btn btn-small c0162">Submit</button></div></form><div><p class="frame__subtitle u-no-margin">Downloads</p><div class="tag-container"><div class="tag c0160"><a native="true" download="" href="https://corctf2021-files.storage.googleapis.com/uploads/ac23014c1063b58bb6bc6dcb8eb29eb814f593793036a30c7f184ea0af7f2534/source.sage">source.sage</a></div></div></div></div></div><div class="frame c0154 "><div class="frame__body"><div class="row u-no-padding"><div class="col-6 u-no-padding"><div class="frame__title title">pwn/ret2cds</div><div class="frame__subtitle u-no-margin">FizzBuzz101</div></div><div class="col-6 u-no-padding u-text-right"><a class="c0158 ">6 solves / 497 points</a></div></div><div class="content-no-padding u-center"><div class="divider c0157"></div></div><div class="c0156 frame__subtitle"><div class="markup"><p>Pwners keep joking about dropping socat and xinetd 0 days so I rewrote netcat in java. I dare you to pop a shell on me now :^)</p>
+
+<p><a href="https://ret2cds.be.ax/" target="_blank">https://ret2cds.be.ax/</a></p>
+
+<p>NOTE: Internet is enabled, please use the provided qemu image, and 
+note that this has been tested to work in a Debian environment for the 
+Docker host. An Ubuntu host is known to have issues with the official 
+solution for the challenge. If you are on Debian, the docker deployment 
+should work for you if you don't want to use the qemu image (but not 
+guaranteed).</p>
+
+<p>QEMU Image: <a href="https://files.be.ax/ret2cds-ae3a8612fb312b3e5b7554e88edc9ce4b5adc0132230a78fbdf527ff34266cfe/ret2cds-qemu.qcow2.gz" target="_blank">ret2cds-qemu.qcow2.gz</a></p>
+
+<p>QEMU Example: <code>qemu-system-x86_64 -enable-kvm -serial mon:stdio 
+-hda ret2cds.qcow2 -nographic -smp 1 -m 1G -net 
+user,hostfwd=tcp::1337-:1337 -net nic</code></p>
+
+<p>QEMU Username: <code>root</code> (no password)</p>
+
+<p>Docker: <a href="https://files.be.ax/ret2cds-ae3a8612fb312b3e5b7554e88edc9ce4b5adc0132230a78fbdf527ff34266cfe/ret2cds.tar" target="_blank">ret2cds.tar</a></p></div></div><form class="form-section"><div class="form-group"><input autocomplete="off" autocorrect="off" class="form-group-input input-small c0161  " placeholder="Flag"><button class="form-group-btn btn-small c0162">Submit</button></div></form></div></div><div class="frame c0154 "><div class="frame__body"><div class="row u-no-padding"><div class="col-6 u-no-padding"><div class="frame__title title">web/mathme</div><div class="frame__subtitle u-no-margin">ehhthing</div></div><div class="col-6 u-no-padding u-text-right"><a class="c0158 ">6 solves / 497 points</a></div></div><div class="content-no-padding u-center"><div class="divider c0157"></div></div><div class="c0156 frame__subtitle"><div class="markup"><p>i need math help, so i made a website where people can send me math notes.</p>
+
+<p>HINT: wait why is mathjax reading my cookies?</p>
+
+<p><a href="https://mathme.be.ax/" target="_blank">https://mathme.be.ax</a>
+<a href="https://adminbot.be.ax/mathme" target="_blank">https://adminbot.be.ax/mathme</a></p></div></div><form class="form-section"><div class="form-group"><input autocomplete="off" autocorrect="off" class="form-group-input input-small c0161  " placeholder="Flag"><button class="form-group-btn btn-small c0162">Submit</button></div></form><div><p class="frame__subtitle u-no-margin">Downloads</p><div class="tag-container"><div class="tag c0160"><a native="true" download="" href="https://corctf2021-files.storage.googleapis.com/uploads/5e07f2b84a4d2fba8784282fc9c4cafb11666a9f2cccae9c62c3a82f75f37aa5/mathme.zip">mathme.zip</a></div></div></div></div></div><div class="frame c0154 "><div class="frame__body"><div class="row u-no-padding"><div class="col-6 u-no-padding"><div class="frame__title title">pwn/Helpless</div><div class="frame__subtitle u-no-margin">c4e</div></div><div class="col-6 u-no-padding u-text-right"><a class="c0158 ">5 solves / 498 points</a></div></div><div class="content-no-padding u-center"><div class="divider c0157"></div></div><div class="c0156 frame__subtitle"><div class="markup"><p>I thought February only had 28 days? How come it's already 2.34? Everything's weird these days.
+I recently lost two of my best friends and I don't even have the keys to get into my House.
+Could you make some new small keys for me? I really need help.</p>
+
+<p>Everyone always jokes about osinting the author to solve challenges. 
+This time osinting the author will definitely not solve the challenge, 
+but it might still be a good idea :)</p>
+
+<p><code>nc pwn.be.ax 5002</code></p>
+
+<p><a href="https://files.be.ax/helpless-65686ce1b7e736b3cbfea485f8fa0cf4a488cbc33f6aba23a5fafd488c13ca50/helpless.tar.xz" target="_blank">helpless.tar.xz</a></p></div></div><form class="form-section"><div class="form-group"><input autocomplete="off" autocorrect="off" class="form-group-input input-small c0161  " placeholder="Flag"><button class="form-group-btn btn-small c0162">Submit</button></div></form></div></div><div class="frame c0154 "><div class="frame__body"><div class="row u-no-padding"><div class="col-6 u-no-padding"><div class="frame__title title">crypto/leave_it_to_chance</div><div class="frame__subtitle u-no-margin">qopruzjf</div></div><div class="col-6 u-no-padding u-text-right"><a class="c0158 ">5 solves / 498 points</a></div></div><div class="content-no-padding u-center"><div class="divider c0157"></div></div><div class="c0156 frame__subtitle"><div class="markup"><p>Do you believe in the heart of the cards?</p>
+
+<p><code>nc crypto.be.ax 6001</code></p></div></div><form class="form-section"><div class="form-group"><input autocomplete="off" autocorrect="off" class="form-group-input input-small c0161  " placeholder="Flag"><button class="form-group-btn btn-small c0162">Submit</button></div></form><div><p class="frame__subtitle u-no-margin">Downloads</p><div class="tag-container"><div class="tag c0160"><a native="true" download="" href="https://corctf2021-files.storage.googleapis.com/uploads/179efd963b8f0c72a8e3b1b71088b409ec92f05df221537271ffa38c015e5803/leave_it_to_chance.zip">leave_it_to_chance.zip</a></div></div></div></div></div><div class="frame c0154 "><div class="frame__body"><div class="row u-no-padding"><div class="col-6 u-no-padding"><div class="frame__title title">misc/maotiplication</div><div class="frame__subtitle u-no-margin">drakon</div></div><div class="col-6 u-no-padding u-text-right"><a class="c0158 ">5 solves / 498 points</a></div></div><div class="content-no-padding u-center"><div class="divider c0157"></div></div><div class="c0156 frame__subtitle"><div class="markup"><p><code>nc maotiplication.be.ax 6000</code></p></div></div><form class="form-section"><div class="form-group"><input autocomplete="off" autocorrect="off" class="form-group-input input-small c0161  " placeholder="Flag"><button class="form-group-btn btn-small c0162">Submit</button></div></form><div><p class="frame__subtitle u-no-margin">Downloads</p><div class="tag-container"><div class="tag c0160"><a native="true" download="" href="https://corctf2021-files.storage.googleapis.com/uploads/9b339a847178309e6f0a27b0d6f2f2bd272ee09390b73dfff5a926b9f072c340/maotiplication.zip">maotiplication.zip</a></div></div></div></div></div><div class="frame c0154 "><div class="frame__body"><div class="row u-no-padding"><div class="col-6 u-no-padding"><div class="frame__title title">pwn/Outfoxed</div><div class="frame__subtitle u-no-margin">clubby789</div></div><div class="col-6 u-no-padding u-text-right"><a class="c0158 ">4 solves / 498 points</a></div></div><div class="content-no-padding u-center"><div class="divider c0157"></div></div><div class="c0156 frame__subtitle"><div class="markup"><p>Just your average, easy browser pwn!</p>
+
+<p><a href="https://outfoxed.be.ax/" target="_blank">https://outfoxed.be.ax</a></p></div></div><form class="form-section"><div class="form-group"><input autocomplete="off" autocorrect="off" class="form-group-input input-small c0161  " placeholder="Flag"><button class="form-group-btn btn-small c0162">Submit</button></div></form><div><p class="frame__subtitle u-no-margin">Downloads</p><div class="tag-container"><div class="tag c0160"><a native="true" download="" href="https://corctf2021-files.storage.googleapis.com/uploads/0df560b1a48641ae98116462c1a3d8ebd6605bcf236c4da5beba29f37da94961/outfoxed.tar.xz">outfoxed.tar.xz</a></div></div></div></div></div><div class="frame c0154 "><div class="frame__body"><div class="row u-no-padding"><div class="col-6 u-no-padding"><div class="frame__title title">rev/vmquack</div><div class="frame__subtitle u-no-margin">FizzBuzz101</div></div><div class="col-6 u-no-padding u-text-right"><a class="c0158 ">3 solves / 499 points</a></div></div><div class="content-no-padding u-center"><div class="divider c0157"></div></div><div class="c0156 frame__subtitle"><div class="markup"><p>The
+ ducks at your local pond picked up reverse engineering as a hobby 
+thanks to their recent acquisition of the Snowman decompiler. In order 
+to join their quacker group, you must quack their quackme!</p></div></div><form class="form-section"><div class="form-group"><input autocomplete="off" autocorrect="off" class="form-group-input input-small c0161  " placeholder="Flag"><button class="form-group-btn btn-small c0162">Submit</button></div></form><div><p class="frame__subtitle u-no-margin">Downloads</p><div class="tag-container"><div class="tag c0160"><a native="true" download="" href="https://corctf2021-files.storage.googleapis.com/uploads/29a8c4ca39e2b92aaecaf2bbe0e7df4da3b4b9cea22226eacf2a4b23a9645188/vmquack.tar.xz">vmquack.tar.xz</a></div></div></div></div></div><div class="frame c0154 "><div class="frame__body"><div class="row u-no-padding"><div class="col-6 u-no-padding"><div class="frame__title title">web/blogme</div><div class="frame__subtitle u-no-margin">strellic</div></div><div class="col-6 u-no-padding u-text-right"><a class="c0158 ">2 solves / 499 points</a></div></div><div class="content-no-padding u-center"><div class="divider c0157"></div></div><div class="c0156 frame__subtitle"><div class="markup"><p>Hey, check out this new blogging platform I made! If you're lucky, I might even post a flag...</p>
+
+<p>NOTE: The admin bot will only follow URLs matching the following regex:</p>
+
+<p><code>^https:\/\/blogme\.be\.ax\/post\/([0-9a-f-]+)$</code></p>
+
+<p><a href="https://blogme.be.ax/" target="_blank">https://blogme.be.ax</a>
+<a href="https://adminbot.be.ax/blogme" target="_blank">https://adminbot.be.ax/blogme</a></p></div></div><form class="form-section"><div class="form-group"><input autocomplete="off" autocorrect="off" class="form-group-input input-small c0161  " placeholder="Flag"><button class="form-group-btn btn-small c0162">Submit</button></div></form><div><p class="frame__subtitle u-no-margin">Downloads</p><div class="tag-container"><div class="tag c0160"><a native="true" download="" href="https://corctf2021-files.storage.googleapis.com/uploads/279e4c1cf83ed276319fb72946880893cbe2dc63b1f467fc0621043e206900ca/blogme.tar.xz">blogme.tar.xz</a></div></div></div></div></div><div class="frame c0154 "><div class="frame__body"><div class="row u-no-padding"><div class="col-6 u-no-padding"><div class="frame__title title">rev/Circus</div><div class="frame__subtitle u-no-margin">chop0</div></div><div class="col-6 u-no-padding u-text-right"><a class="c0158 ">2 solves / 499 points</a></div></div><div class="content-no-padding u-center"><div class="divider c0157"></div></div><div class="c0156 frame__subtitle"><div class="markup"><p></p><pre class="code ">I love Rust,
+Rust or Bust.
+Rust for life and 'til death do us part.
+Rust of the Rings!
+I do not like the garbage collector.
+It always gives me strife.
+It is the curse, that is our marriage,
+And I will hate it until I die.
+I'll run away and disavow it.
+My love for it will never grow.
+It used to be a healthy marriage,
+But it is over now.
+It was when Rust came out
+And start to use the memory-safe features
+As the garbage collector had no choice,
+But to accept that it was over as well.
+I'll not complain about memory safety.
+It is a good thing, I suppose.
+But when I need to mutate a single mapping,
+I want to be in charge of the mapping.
+I don't want to be told no,
+I want to have control over the flow.</pre>
+<a href="https://circus.be.ax/" target="_blank">https://circus.be.ax</a><p></p></div></div><form class="form-section"><div class="form-group"><input autocomplete="off" autocorrect="off" class="form-group-input input-small c0161  " placeholder="Flag"><button class="form-group-btn btn-small c0162">Submit</button></div></form><div><p class="frame__subtitle u-no-margin">Downloads</p><div class="tag-container"><div class="tag c0160"><a native="true" download="" href="https://corctf2021-files.storage.googleapis.com/uploads/fe0ec7d942bdebae3284ab269da52ecdfbe8ba7a808ea2b2422ebf176203fb25/circus.tar.gz">circus.tar.gz</a></div></div></div></div></div><div class="frame c0154 "><div class="frame__body"><div class="row u-no-padding"><div class="col-6 u-no-padding"><div class="frame__title title">web/saasme</div><div class="frame__subtitle u-no-margin">ehhthing,strellic</div></div><div class="col-6 u-no-padding u-text-right"><a class="c0158 ">2 solves / 499 points</a></div></div><div class="content-no-padding u-center"><div class="divider c0157"></div></div><div class="c0156 frame__subtitle"><div class="markup"><p>ssrf as a service (SaaS) — test out all your 𝓭𝓪𝓷𝓴 ssrf exploits here!!!</p>
+
+<p>NOTE: This challenge uses per-team instances. Please test locally 
+(this challenge works best with an Ubuntu host) and don't launch one 
+until you have a working exploit.</p>
+
+<p>hint: the intended solution uses a lot of puppeteer pwn</p>
+
+<p><a href="https://saasme.be.ax/" target="_blank">https://saasme.be.ax</a></p></div></div><form class="form-section"><div class="form-group"><input autocomplete="off" autocorrect="off" class="form-group-input input-small c0161  " placeholder="Flag"><button class="form-group-btn btn-small c0162">Submit</button></div></form><div><p class="frame__subtitle u-no-margin">Downloads</p><div class="tag-container"><div class="tag c0160"><a native="true" download="" href="https://corctf2021-files.storage.googleapis.com/uploads/6df60677abec2a35a4d1969e045b1ec0dfe27886d3648dbee3140649d40a6767/saasme.tar">saasme.tar</a></div></div></div></div></div><div class="frame c0154 "><div class="frame__body"><div class="row u-no-padding"><div class="col-6 u-no-padding"><div class="frame__title title">rev/vmstack</div><div class="frame__subtitle u-no-margin">goomadow-belsahound</div></div><div class="col-6 u-no-padding u-text-right"><a class="c0158 ">1 solve / 500 points</a></div></div><div class="content-no-padding u-center"><div class="divider c0157"></div></div><div class="c0156 frame__subtitle"><div class="markup"><p>Some psychopath keeps stacking VMs... Please help us cancel this toxic behaviour!</p></div></div><form class="form-section"><div class="form-group"><input autocomplete="off" autocorrect="off" class="form-group-input input-small c0161  " placeholder="Flag"><button class="form-group-btn btn-small c0162">Submit</button></div></form><div><p class="frame__subtitle u-no-margin">Downloads</p><div class="tag-container"><div class="tag c0160"><a native="true" download="" href="https://corctf2021-files.storage.googleapis.com/uploads/ef12cfc070b334e056ed22edd110f7a28049cd70fba8e0fc306becad53d10227/vmstack.tar.xz">vmstack.tar.xz</a></div></div></div></div></div><div class="frame c0154 "><div class="frame__body"><div class="row u-no-padding"><div class="col-6 u-no-padding"><div class="frame__title title">rev/generic-obfuscator</div><div class="frame__subtitle u-no-margin">c3bacd17</div></div><div class="col-6 u-no-padding u-text-right"><a class="c0158 ">1 solve / 500 points</a></div></div><div class="content-no-padding u-center"><div class="divider c0157"></div></div><div class="c0156 frame__subtitle"><div class="markup"><p>Generic. Obfuscator. Nothing more, nothing less.</p>
+
+<p>hint: think segment trees!</p>
+
+<p><a href="https://files.be.ax/generic_obfuscator-f877814c31e42760cc6b1d7a732749008a33d56d57b6881c6db8ea415fbfc41e/generic_obfuscator.tar.xz" target="_blank">generic<em>obfuscator.tar.xz</em></a></p></div></div><form class="form-section"><div class="form-group"><input autocomplete="off" autocorrect="off" class="form-group-input input-small c0161  " placeholder="Flag"><button class="form-group-btn btn-small c0162">Submit</button></div></form></div></div><div class="frame c0154 "><div class="frame__body"><div class="row u-no-padding"><div class="col-6 u-no-padding"><div class="frame__title title">pwn/Rusty</div><div class="frame__subtitle u-no-margin">c4e</div></div><div class="col-6 u-no-padding u-text-right"><a class="c0158 ">1 solve / 500 points</a></div></div><div class="content-no-padding u-center"><div class="divider c0157"></div></div><div class="c0156 frame__subtitle"><div class="markup"><p>My boy Rusty was blindfolded with something really hard to break!
+Can you create a machine to help him see again?</p>
+
+<p><a href="https://files.be.ax/rusty-1810a5f56d6e7a3efceb3b4499c06c36df03800a79df166ed7232103dbbf802f/rusty.tar.xz" target="_blank">rusty.tar.xz</a></p>
+
+<p><code>nc pwn.be.ax 5003</code></p></div></div><form class="form-section"><div class="form-group"><input autocomplete="off" autocorrect="off" class="form-group-input input-small c0161  " placeholder="Flag"><button class="form-group-btn btn-small c0162">Submit</button></div></form></div></div><div class="frame c0154 "><div class="frame__body"><div class="row u-no-padding"><div class="col-6 u-no-padding"><div class="frame__title title">web/findme</div><div class="frame__subtitle u-no-margin">ehhthing</div></div><div class="col-6 u-no-padding u-text-right"><a class="c0158 ">1 solve / 500 points</a></div></div><div class="content-no-padding u-center"><div class="divider c0157"></div></div><div class="c0156 frame__subtitle"><div class="markup"><p>i learned mqtt and made a cool chat app with it. it's so secure i bet you can't find me on it</p>
+
+<p>HINT: secure until death do us part</p>
+
+<p><a href="https://findme.be.ax/" target="_blank">https://findme.be.ax</a></p></div></div><form class="form-section"><div class="form-group"><input autocomplete="off" autocorrect="off" class="form-group-input input-small c0161  " placeholder="Flag"><button class="form-group-btn btn-small c0162">Submit</button></div></form><div><p class="frame__subtitle u-no-margin">Downloads</p><div class="tag-container"><div class="tag c0160"><a native="true" download="" href="https://corctf2021-files.storage.googleapis.com/uploads/dbecccd7f2bca9dacfd23f2420cf1dee8c519d501c0e0ce8373ce5da6daa545a/findme.zip">findme.zip</a></div></div></div></div></div><div class="frame c0154 "><div class="frame__body"><div class="row u-no-padding"><div class="col-6 u-no-padding"><div class="frame__title title">rev/AliceInSleeperio</div><div class="frame__subtitle u-no-margin">goomadow-belsahound</div></div><div class="col-6 u-no-padding u-text-right"><a class="c0158 ">1 solve / 500 points</a></div></div><div class="content-no-padding u-center"><div class="divider c0157"></div></div><div class="c0156 frame__subtitle"><div class="markup"><p>Our
+ dear beloved Alice has fallen into the deep sleep universe known as 
+Sleeperio, where nothing makes sense. Let's make sense of the sense-less
+ and pull Alice out of this nightmare once and for all! Note: Your AV 
+might not be happy about this file.</p>
+
+<p><code>Don't reinvent the wheel, everything you need is in the clues ;)</code></p>
+
+<p><a href="https://files.be.ax/AliceInSleepio-5c7671dfacc055b4ce0771a5170e52e977951ed6aaeb13f1ae64c93fc66a02df/AliceInSleepio.tar.xz" target="_blank">AliceInSleeperio.tar.xz</a></p>
+
+<p>Note - the author mentioned the following as a hint:
+</p><pre class="code ">Themida is winlicense
+Oreans Technologies sells CodeVirtualizer (their VM), Themida (their VM and packer) and WinLicense (their VM, packer and license software)
+If an unpacker works for winlicense, it works for themida
+Notice however that there are 2 steps; unpacking and devirtualization
+Those require different processes, but both are obtainable from the hint
+The goal of the challenge is to showcase that commercial packers are not always at the discretion of people who make custom tools</pre><p></p></div></div><form class="form-section"><div class="form-group"><input autocomplete="off" autocorrect="off" class="form-group-input input-small c0161  " placeholder="Flag"><button class="form-group-btn btn-small c0162">Submit</button></div></form></div></div><div class="frame c0154 "><div class="frame__body"><div class="row u-no-padding"><div class="col-6 u-no-padding"><div class="frame__title title">web/msgme</div><div class="frame__subtitle u-no-margin">strellic</div></div><div class="col-6 u-no-padding u-text-right"><a class="c0158 ">1 solve / 500 points</a></div></div><div class="content-no-padding u-center"><div class="divider c0157"></div></div><div class="c0156 frame__subtitle"><div class="markup"><p>The
+ easiest way to message people all around the world instantly. A new and
+ improved totally secure chat program (and this one has source 😉)</p>
+
+<p>NOTE: If your payload is working locally but not remotely, please contact us.</p>
+
+<p>HINT: this messaging service is great! i know the site uses 
+websockets, but have you heard of this new Real Time Communication 
+technology the browser supports? (also GCP blocks some ports lol)</p>
+
+<p><a href="https://msgme.be.ax/" target="_blank">https://msgme.be.ax</a></p>
+
+<p><a href="https://adminbot.be.ax/msgme" target="_blank">https://adminbot.be.ax/msgme</a></p></div></div><form class="form-section"><div class="form-group"><input autocomplete="off" autocorrect="off" class="form-group-input input-small c0161  " placeholder="Flag"><button class="form-group-btn btn-small c0162">Submit</button></div></form><div><p class="frame__subtitle u-no-margin">Downloads</p><div class="tag-container"><div class="tag c0160"><a native="true" download="" href="https://corctf2021-files.storage.googleapis.com/uploads/9369745a883e55a181cba1a051549e1d064c8e5dfebe51e45f42a0a27570c304/msgme.zip">msgme.zip</a></div></div></div></div></div><div class="frame c0154 "><div class="frame__body"><div class="row u-no-padding"><div class="col-6 u-no-padding"><div class="frame__title title">web/styleme</div><div class="frame__subtitle u-no-margin">strellic</div></div><div class="col-6 u-no-padding u-text-right"><a class="c0158 ">1 solve / 500 points</a></div></div><div class="content-no-padding u-center"><div class="divider c0157"></div></div><div class="c0156 frame__subtitle"><div class="markup"><p>Yet another Chrome extension web challenge... wait, the extension is on the Chrome Web Store??</p>
+
+<p>hint 1: wow, that's such a weird way to parse stylesheets, huh?</p>
+
+<p>hint 2: this site is #amazing and #great</p>
+
+<p>hint 3: why don't you guys #focus more on this challenge?</p>
+
+<p>NOTE: the admin bot isn't logged into any account, but it can do requests to the localhost instance at <code>http://localhost</code>, giving the admin bot admin access</p>
+
+<p><a href="https://styleme.be.ax/" target="_blank">https://styleme.be.ax</a>
+<a href="https://files.be.ax/styleme-1391ec4f8ba04c44791ceff949452636f9097ded0964a63fe033844f5509a1bd/styleme.tar.xz" target="_blank">styleme.tar.xz</a>
+<a href="https://files.be.ax/styleme-1391ec4f8ba04c44791ceff949452636f9097ded0964a63fe033844f5509a1bd/adminbot.tar" target="_blank">adminbot.tar</a></p></div></div><form class="form-section"><div class="form-group"><input autocomplete="off" autocorrect="off" class="form-group-input input-small c0161  " placeholder="Flag"><button class="form-group-btn btn-small c0162">Submit</button></div></form></div></div><div class="frame c0154 "><div class="frame__body"><div class="row u-no-padding"><div class="col-6 u-no-padding"><div class="frame__title title">pwn/Wall of Perdition</div><div class="frame__subtitle u-no-margin">FizzBuzz101, D3v17</div></div><div class="col-6 u-no-padding u-text-right"><a class="c0158 ">0 solves / 500 points</a></div></div><div class="content-no-padding u-center"><div class="divider c0157"></div></div><div class="c0156 frame__subtitle"><div class="markup"><p>Elastic
+ objects seem to have even more power in many more slabs! Note that this
+ is a harder variation of the Fire of Salvation challenge.</p>
+
+<p>hint: Dive into the source code for that object's kernel functions 
+and you'll see many things! You can still achieve the same powerful 
+primitives, but both primitives now has not been documented or written 
+extensively about to the extent of our knowledge.</p>
+
+<p><a href="https://files.be.ax/wall_of_perdition-d9b3975d66fa9f47a9bd79c3ffa4cf18a01ace07fa45f274af8f71a9daa872c1/wall_of_perdition.tar.xz" target="_blank">wall-of-perdition.tar.xz</a></p>
+
+<p><code>nc wall-of-perdition.be.ax 1337</code></p></div></div><form class="form-section"><div class="form-group"><input autocomplete="off" autocorrect="off" class="form-group-input input-small c0161  " placeholder="Flag"><button class="form-group-btn btn-small c0162">Submit</button></div></form></div></div><div class="frame c0154 "><div class="frame__body"><div class="row u-no-padding"><div class="col-6 u-no-padding"><div class="frame__title title">pwn/Fire of Salvation</div><div class="frame__subtitle u-no-margin">FizzBuzz101, D3v17</div></div><div class="col-6 u-no-padding u-text-right"><a class="c0158 ">0 solves / 500 points</a></div></div><div class="content-no-padding u-center"><div class="divider c0157"></div></div><div class="c0156 frame__subtitle"><div class="markup"><p>Elastic
+ objects in kernel have more power than you think. Note that in addition
+ to a standard initramfs and compressed kernel image, the kernel with 
+symbols and debugging information is provided as well. A kernel config 
+file is provided as well, but some of the important options include:
+</p><pre class="code ">CONFIG_SLAB=y
+CONFIG_SLAB_FREELIST_RANDOM=y
+CONFIG_SLAB_FREELIST_HARDEN=y
+CONFIG_STATIC_USERMODEHELPER=y
+CONFIG_STATIC_USERMODEHELPER_PATH=""
+CONFIG_FG_KASLR=y</pre>
+SMEP, SMAP, and KPTI are of course on. Note that this is an easier variation of the Wall of Perdition challenge.<p></p>
+
+<p>hint: Using the correct elastic object you can achieve powerful 
+primitives such as arb read and arb write. While arb read for this 
+object has been documented, arb write has not to the extent of our 
+knowledge (it is not a 0 day tho so don't worry).</p>
+
+<p><a href="https://files.be.ax/fire_of_salvation-37aa7dc2684d5b3c2bdae8a99d9bf761843c88ccec0edab84dd6a91b19b843de/fire_of_salvation.tar.xz" target="_blank">fire-of-salvation.tar.xz</a>
+<a href="https://files.be.ax/fire_of_salvation-37aa7dc2684d5b3c2bdae8a99d9bf761843c88ccec0edab84dd6a91b19b843de/kernel.config" target="_blank">kernel.config</a>
+<a href="https://files.be.ax/fire_of_salvation-37aa7dc2684d5b3c2bdae8a99d9bf761843c88ccec0edab84dd6a91b19b843de/vmlinux.dist.gz" target="_blank">vmlinux.dist.gz</a></p>
+
+<p><code>nc fire-of-salvation.be.ax 1337</code></p></div></div><form class="form-section"><div class="form-group"><input autocomplete="off" autocorrect="off" class="form-group-input input-small c0161  " placeholder="Flag"><button class="form-group-btn btn-small c0162">Submit</button></div></form></div></div></div></div></div><div class="c0127"></div><div class="c0112"><span>Powered by <a href="https://rctf.redpwn.net/" target="_blank" rel="noopener noreferrer">rCTF</a></span></div></div><script type="__PREACT_CLI_DATA__">%7B%22preRenderData%22:%7B%22url%22:%22/%22%7D%7D</script><script nomodule="">!function(){var e=document,t=e.createElement("script");if(!("noModule"in t)&&"onbeforeload"in t){var n=!1;e.addEventListener("beforeload",function(e){if(e.target===t)n=!0;else if(!e.target.hasAttribute("nomodule")||!n)return;e.preventDefault()},!0),t.type="module",t.src=".",e.head.appendChild(t),t.remove()}}();</script><script crossorigin="anonymous" src="Challenges%20|%20corCTF%202021_files/bundle_002.js" type="module"></script><script nomodule="" src="Challenges%20|%20corCTF%202021_files/polyfills.js"></script><script nomodule="" defer="defer" src="Challenges%20|%20corCTF%202021_files/bundle.js"></script></body></html>

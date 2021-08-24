@@ -21,6 +21,8 @@ arr = [int(entry) for entry in line1.split(" ")]
 p, q, r = arr #Destructuring
 print("p, q, r:",p, q, r)
 
+print(v(p,r))
+print(p>r)
 '''
 n = pow(p, q) * r
 print("N:",n)
@@ -32,4 +34,7 @@ assert a1 % p != 0 and a2 % p != 0
 t = pow(a1, n) + pow(a2, n)
 print(binascii.hexlify(xor(flag, long_to_bytes(v(p, t)))))
 '''
+enc = b'6255a505b969be8175a5c578fd6e856ecd85faa1a22fdf38d2d11851211676fd3047ed12c4027e66ed2173495877180e3d49a387b74701fbbbdce00a2248c7812b157626c95e7cf5727ee90cc9a6a98d84ee50f106b11245d65b87a27bbd7ab94b0d82eeb6e49e81249ae880c150ff87d8da701e9d317932fa2b27b64eb894a112d942d7d269478a6c120be885f3fbd065c38e70498c2f294b47bb08da09fb63c05070248079fe4311c9821dd8d3a08b15f13cdb0b7a8d406790c4796e0218851b496a11bf1ad7575be6d9999d5f1c73080d724c66a116f865ffcd3048be5d59dae55a4a063629d30429765733521702ec36d3f111b015934d15d620ad0e35ee56'
+byte_enc = binascii.unhexlify(enc)
 
+print(xor(byte_enc,long_to_bytes(2*q)))
