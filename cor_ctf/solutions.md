@@ -373,4 +373,4 @@ This problem turned out to be mainly math, which explains why I wasn't able to s
 
 In the problem we were given the values of `p`,`q`, `r`, and the hex result.
 
-Since XOR is reversible, we can just XOR the unhexlified result with `x`, but the issue comes with calculating it. I sat on this problem for a few hours, thinking about ways that I could algebraic manipulate the expression to make it easier for find.
+Since XOR is reversible, we can just XOR the unhexlified result with `x`, but the issue comes with calculating it. I sat on this problem for a few hours, thinking about ways that I could algebraic manipulate the expression to make it easier for find. 
