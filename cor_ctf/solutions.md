@@ -2,9 +2,12 @@
 
 Website link to competition homepage: <https://2021.cor.team/>. The points value are based on the final values at the end of the competition (the problems value depreciates with more solves)
 
+Link to crypto official writeups: <https://hackmd.io/@LHyyoaqQRTGd0Pw3CjNUhw/ByHiLa1-t>
+
 ## Problems that I could solve
 
-There were 3 problems out of 35 that I was able to solve during the entire competition (a depressing number if you ask me), all of them being RSA. I'll also be looking over people's writeups of competition problems to see what I could learn from them. 
+There were 3 problems out of 35 that I was able to solve during the entire competition (a depressing number if you ask me), all of them being RSA. I'll also be looking over people's writeups of competition problems to see what I could learn from them.
+
 ## Fibinary
 
 Category: Crypto
@@ -123,7 +126,6 @@ I'm not sure if there was a more mathematically-informed way of solving this pro
 My exploit script looks like this:
 
 ~~~py
-
 #Chose random p for hi
 i = 0
 hi = 12123011818658592223829585444463227444387063694309686111263422100048399811440660891168952304033795717311157503302903808212679523140543340266855141269464379
@@ -163,8 +165,7 @@ Full script is at [exp.py](Crypto/Dividing_Secrets/exp.py)
 
 Flag: corctf{qu4drat1c_r3s1due_0r_n0t_1s_7h3_qu3st1on8852042051e57492}
 
-
-## Problems that I couldn't solve 
+## Problems that I couldn't solve
 
 There were a few problems that I attempted but was not able to successfully solve. After reading people's writeups, I'll try to detail their solution below (including how I had tried to go about it).
 
@@ -266,6 +267,7 @@ Somehow, `MikeCAT#7923` was also able to figure out that `users` has the paramet
 ~~~
 
 * Response
+* 
 ~~~json
 {"data":{"users":[{"username":"admin","token":"3cd3a50e63b3cb0a69cfb7d9d4f0ebc1dc1b94143475535930fa3db6e687280b"},{"username":"b82d9af8a6226c072bcd811e7a009ffb36b2ad88be67ac396d170fe8e2f1de7c","token":"5568f87dc1ca15c578e6b825ffca7f685ac433c1826b075b499f68ea309e79a6"},{"username":"8dab139e71af6aebdec375ac12a1055b4d515cb35751208d3e615194ee521f97","token":"d34609c0c342f7dc6f3d8b18356dfeda82a233a9846c7d2dbab8fb803719caf9"},{"username":"ccda5bd3342c7231f9e083a6291a38bad10647168a04a3784350acda42a99fca","token":"80dae68b95977c96be675ed723815a65d69de38dfefb0710e655584014849abd"},
 [...]
@@ -280,7 +282,7 @@ which gives us the token associated with `admin`. We can then query for the flag
 {"query":"query {flag(token:\"3cd3a50e63b3cb0a69cfb7d9d4f0ebc1dc1b94143475535930fa3db6e687280b\")}"}
 ~~~
 
-*Response
+* Response
 
 ~~~json
 {
@@ -328,7 +330,6 @@ print(json)
 
 However, when I tried to run this code in the web challenge, it timed out on me in the `urlopen()` call. From this, I can assume that the docker container running the challenge must have disabled / prevented connections to web servers.
 
-
 The correct way of solving this problem is to send formatted blocks of code with a guess for what the next flag character is. If our guess is wrong, we deliberately fails the test cases. Otherwise, we return the correct solution.
 
 The exploit code would look something like this:
@@ -356,7 +357,6 @@ An interesting part of this script is that it uses `print(flag+i,end='\r')` to p
 
 Flag: corctf{1m4g1n3_cp_g0lf_6a318dfe}
 
-
 ## supercomputer
 
 Category: Crypto
@@ -373,4 +373,33 @@ This problem turned out to be mainly math, which explains why I wasn't able to s
 
 In the problem we were given the values of `p`,`q`, `r`, and the hex result.
 
-Since XOR is reversible, we can just XOR the unhexlified result with `x`, but the issue comes with calculating it. I sat on this problem for a few hours, thinking about ways that I could algebraic manipulate the expression to make it easier for find. 
+Since XOR is reversible, we can just XOR the unhexlified result with `x`, but the issue comes with calculating it. I sat on this problem for a few hours, thinking about ways that I could algebraic manipulate the expression to make it easier for find `x`. 
+
+<img src="Crypto/supercomputer/work.jpg" alt="Algebra Work" width="600"/>
+
+The solution, as it turns out, is more complex than just algebraic manipulation. In competitive math, there is something called the ["Lifting the Exponent"](https://brilliant.org/wiki/lifting-the-exponent/) lemma (LTE) for calculating the largest power of a prime which divides a difference or a sum of nth powers. While I won't go into the math (mostly because I don't want to :)), there is a research [paper](https://www.taharut.org/imo/I5775/LTE.pdf) on this topic which provides a convenient theorem derived from LTE for us. 
+
+<img src="Crypto/supercomputer/Theorem.png" alt="LTE Theorem 2" width = "700">
+
+Note: We define `v_p(x)` to be the greatest power in which a prime p divides x.
+
+From this, we can find `x` by breaking it down to the following:
+
+<img src="Crypto/supercomputer/sol.jpg" alt="Solution" width = "500">
+
+Thus we find that simply `x = 2q`
+
+Knowing this value, we can easily reverse the encryption by doing:
+
+~~~py
+enc = b'6255a505b969be8175a5c578fd6e856ecd85faa1a22fdf38d2d11851211676fd3047ed12c4027e66ed2173495877180e3d49a387b74701fbbbdce00a2248c7812b157626c95e7cf5727ee90cc9a6a98d84ee50f106b11245d65b87a27bbd7ab94b0d82eeb6e49e81249ae880c150ff87d8da701e9d317932fa2b27b64eb894a112d942d7d269478a6c120be885f3fbd065c38e70498c2f294b47bb08da09fb63c05070248079fe4311c9821dd8d3a08b15f13cdb0b7a8d406790c4796e0218851b496a11bf1ad7575be6d9999d5f1c73080d724c66a116f865ffcd3048be5d59dae55a4a063629d30429765733521702ec36d3f111b015934d15d620ad0e35ee56'
+byte_enc = binascii.unhexlify(enc)
+
+print(xor(byte_enc,long_to_bytes(2*q)))
+~~~
+
+giving us the result:
+
+`b'corctf{1_b3t_y0u_d1dnt_4ctu411y_d0_th3_m4th_d1d_y0u?}\ncorctf{1_b3t_y0u_d1dnt_4ctu411y_d0_th3_m4th_d1d_y0u?}\ncorctf{1_b3t_y0u_d1dnt_4ctu411y_d0_th3_m4th_d1d_y0u?}\ncorctf{1_b3t_y0u_d1dnt_4ctu411y_d0_th3_m4th_d1d_y0u?}\ncorctf{1_b3t_y0u_d1dnt_4ctu411y_d0_th3_m4'`
+
+Flag: corctf{1_b3t_y0u_d1dnt_4ctu411y_d0_th3_m4th_d1d_y0u?}
