@@ -1,0 +1,21 @@
+Foremost version 1.5.7 by Jesse Kornblum, Kris Kendall, and Nick Mikus
+Audit File
+
+Foremost started at Sat Sep 11 17:54:07 2021
+Invocation: foremost -i sus.riff 
+Output directory: /home/huydai/Documents/general_ctf_2021/csaw_quals/Fallout - New Mobius/output
+Configuration file: /etc/foremost.conf
+------------------------------------------------------------------
+File: sus.riff
+Start: Sat Sep 11 17:54:07 2021
+Length: 147 KB (150930 bytes)
+ 
+Num	 Name (bs=512)	       Size	 File Offset	 Comment 
+
+Finish: Sat Sep 11 17:54:07 2021
+
+0 FILES EXTRACTED
+	
+------------------------------------------------------------------
+
+Foremost finished at Sat Sep 11 17:54:07 2021
