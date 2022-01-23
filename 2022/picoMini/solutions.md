@@ -79,4 +79,57 @@ print(res)
 
 Flag: picoCTF{gl17ch_m3_n07_811fffee}
 
+## PW Crack 2
+
+Category: General Skills
+Points: 30
+
+The expected password string as "39ce"
+
+Flag: picoCTF{tr45h_51ng1ng_502ec42e}
+
+## HasingJobApp
+
+Category: General Skills
+Points: 40
+
+This problem wanted for us to get the md5 hash of various strings. I decided to over-engineer this problem and write a solve script to automate the tasks.
+
+~~~py
+from pwn import *
+import hashlib 
+
+
+conn = remote("saturn.picoctf.net",51108)
+res = ""
+
+while "picoCTF" not in res:
+    res = conn.recvline().decode('utf-8')[:-2]
+    print(res)
+    try:
+        quote = res[res.index("\'")+1:-1]
+    except:
+        print(res)
+    print("Quote:",quote)
+
+    md5sum = hashlib.md5(quote.encode()).hexdigest()
+    print(conn.recvline()) #Ignore line
+    conn.sendline(md5sum.encode()) #Send answer
+    res = conn.recvline().decode()
+    res = conn.recvline().decode()
+    print(res)
+
+conn.close()
+~~~
+
+Flag: picoCTF{4ppl1c4710n_r3c31v3d_bf2ceb02}
+
+## Serpentine
+
+Category: General Skills
+Points: 50
+
+The challenge wants us to change the Python file to call the `print_key()` function.
+
+Flag: picoCTF{7h3_r04d_l355_7r4v3l3d_569ab7a6}
 
