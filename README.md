@@ -1,6 +1,6 @@
 # CTF Writeups
 
-My solutions for various CTF competitions that I participate in from 2021-2023, including some training wargames and archived CTF challenges.
+My solutions for various CTF competitions and TryHackMe modules that I participate in from 2021-2023, including some training wargames and archived CTF challenges.
 
 Note: Many of the included binaries in this git repo is inherently unsecure (since they are posted as pwn challenges).
 
@@ -17,3 +17,4 @@ CTF List:
 3. 2023
    1. HackTheBox
       1. Red Team Fundamentals
+      2. Jr Pentesting
