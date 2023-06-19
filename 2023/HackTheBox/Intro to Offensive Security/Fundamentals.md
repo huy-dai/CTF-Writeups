@@ -37,3 +37,18 @@ Flag: THM{PENTEST_COMPLETE}
 * **CIA Triad**: Covers *Confidentiality*, *Integrity*, *Availability*. It is a continuous cycle; if one element is not met, then the other two are rendered useless. It highlights the importance of protecting data away from unwanted eyes (confidentiality), ensuring data is not improperly tampered (integrity), and that it is available for users (availability)
 
 ## Principles of Privileges
+
+**Privileged Identity Management (PIM)** is used to translate a user's role in an organization to an access role on a system, whereas **Privileged Access Management (PAM)** is the management of privileges an access role has, along with enforcing security policies like password + audition policies.
+
+## Security Models
+
+- **Bell-La Padula Model**: Used for *confidentiality*, has rule "no write down, no read up". Most like military. This ensures that a person can't read documents that is at a higher security level than they are, and that higher-ups don't abuse their power to overwrite everything below.
+- **Biba Model**: Used for *integrity*, has rule "no write up, no read down." Most like software development companies. It disallows read down because in this model information is believed to be less reliable to lower down you go into the levels (a higher up should only read higher up info). In addition, preventing writing up preserves integrity of message at each level.
+
+## Threat Modeling
+
+Threat modelling is process of reviewing, improving, and testing security protocols of organization.
+
+There are frameworks such as STRIDE (Spoofing identity, Tampering with data, Repudiation threats, Information disclosure, Denial of Service and Elevation of privileges) and PASTA (Process for Attack Simulation and Threat Analysis).
+
+Incidents are classified by cross-rating of **urgency** and **impact**.
